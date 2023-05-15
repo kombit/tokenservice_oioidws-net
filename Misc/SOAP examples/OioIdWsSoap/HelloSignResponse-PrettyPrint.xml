@@ -1,0 +1,31 @@
+﻿<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <s:Header>
+    <a:Action s:mustUnderstand="1" u:Id="_2">http://tempuri.org/IHelloWorld/HelloSignResponse</a:Action>
+    <a:RelatesTo u:Id="_3">urn:uuid:18fc4148-87b9-44fd-bb04-0fc69a943f85</a:RelatesTo>
+    <a:MessageID u:Id="_4">urn:uuid:3b996599-0be7-47d3-a409-bab46873c53d</a:MessageID>
+    <o:Security s:mustUnderstand="1" xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+      <u:Timestamp u:Id="uuid-7c8fc8a9-ef42-4fdc-bcca-d0b494530dd1-1">
+        <u:Created>2023-04-04T08:21:52.908Z</u:Created>
+        <u:Expires>2023-04-04T08:26:52.908Z</u:Expires>
+      </u:Timestamp>
+    </o:Security>
+  </s:Header>
+  <s:Body u:Id="_1">
+    <HelloSignResponse xmlns="http://tempuri.org/">
+      <HelloSignResult>Hello Sign Schultz. Your claims are:
+Type: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier, Value: SERIALNUMBER=CVR:19435075-FID:64205450 + CN=WSC_Core (funktionscertifikat), O=KOMBIT A/S // CVR:19435075, C=DK
+Type: dk:gov:saml:attribute:CvrNumberIdentifier, Value: 11111111
+Type: dk:gov:saml:attribute:AssuranceLevel, Value: 3
+Type: dk:gov:saml:attribute:SpecVer, Value: DK-SAML-2.0
+Type: dk:gov:saml:attribute:KombitSpecVer, Value: 1.0
+Type: dk:gov:saml:attribute:Privileges_intermediate, Value: PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48YnBwOlByaXZpbGVnZUxpc3QgeG1sbnM6YnBwPSJodHRwOi8vaXRzdC5kay9vaW9zYW1sL2Jhc2ljX3ByaXZpbGVnZV9wcm9maWxlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj48UHJpdmlsZWdlR3JvdXAgU2NvcGU9InVybjpkazpnb3Y6c2FtbDpjdnJOdW1iZXJJZGVudGlmaWVyOjExMTExMTExIj48UHJpdmlsZWdlPmh0dHA6Ly9rb21iaXQuc3NyLmNvbS9yb2xlcy9zZXJ2aWNlc3lzdGVtcm9sZS9yb2xlMS8xPC9Qcml2aWxlZ2U+PENvbnN0cmFpbnQgTmFtZT0iaHR0cDovL2tvbWJpdC5zc3IuY29tL2NvbnN0cmFpbnRzL0RSVDEvMSI+dmFsdWUxPC9Db25zdHJhaW50PjxDb25zdHJhaW50IE5hbWU9Imh0dHA6Ly9rb21iaXQuc3NyLmNvbS9jb25zdHJhaW50cy9EVFIyLzEiPnZhbHVlMjwvQ29uc3RyYWludD48L1ByaXZpbGVnZUdyb3VwPjxQcml2aWxlZ2VHcm91cCBTY29wZT0idXJuOmRrOmdvdjpzYW1sOmN2ck51bWJlcklkZW50aWZpZXI6MTExMTExMTEiPjxQcml2aWxlZ2U+aHR0cDovL2tvbWJpdC5zc3IuY29tL3JvbGVzL3NlcnZpY2VzeXN0ZW1yb2xlL3JvbGUyLzE8L1ByaXZpbGVnZT48Q29uc3RyYWludCBOYW1lPSJodHRwOi8va29tYml0LnNzci5jb20vY29uc3RyYWludHMvRFJUMS8xIj52YWx1ZTM8L0NvbnN0cmFpbnQ+PENvbnN0cmFpbnQgTmFtZT0iaHR0cDovL2tvbWJpdC5zc3IuY29tL2NvbnN0cmFpbnRzL0RUUjIvMSI+dmFsdWU0PC9Db25zdHJhaW50PjwvUHJpdmlsZWdlR3JvdXA+PC9icHA6UHJpdmlsZWdlTGlzdD4=
+	Privilege group scope: urn:dk:gov:saml:cvrNumberIdentifier:11111111
+		Privilege: http://kombit.ssr.com/roles/servicesystemrole/role1/1
+	Privilege group scope: urn:dk:gov:saml:cvrNumberIdentifier:11111111
+		Privilege: http://kombit.ssr.com/roles/servicesystemrole/role2/1
+Type: http://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationmethod, Value: http://schemas.microsoft.com/ws/2008/06/identity/authenticationmethod/x509
+Type: http://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationinstant, Value: 2023-04-04T08:21:43.668Z
+</HelloSignResult>
+    </HelloSignResponse>
+  </s:Body>
+</s:Envelope>

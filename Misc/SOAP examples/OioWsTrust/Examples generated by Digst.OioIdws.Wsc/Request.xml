@@ -1,0 +1,93 @@
+<s:Envelope xmlns:a="http://www.w3.org/2005/08/addressing" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <s:Header>
+    <a:Action s:mustUnderstand="1" wsu:Id="action">http://docs.oasis-open.org/ws-sx/ws-trust/200512/RST/Issue</a:Action>
+    <a:MessageID wsu:Id="msgid">uuid:7406c567-1f02-4e86-9227-14d8e1fd1eea</a:MessageID>
+    <a:To wsu:Id="to">https://n2adgangsstyring.eksterntest-stoettesystemerne.dk/runtime/services/kombittrust/14/certificatemixed</a:To>
+    <Security s:mustUnderstand="1" xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+      <wsu:Timestamp wsu:Id="sec-ts">
+        <wsu:Created>2023-04-04T08:21:02Z</wsu:Created>
+        <wsu:Expires>2023-04-04T08:26:02Z</wsu:Expires>
+      </wsu:Timestamp>
+      <BinarySecurityToken ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" wsu:Id="sec-binsectoken">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</BinarySecurityToken>
+      <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+          <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+          <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+          <Reference URI="#action">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>q32L54F9pVlMNPZsh9ZRqh90gN6W3BC65OowF2P9pys=</DigestValue>
+          </Reference>
+          <Reference URI="#msgid">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>GkEZU4QeRBWOYv16yBoTwEx9TAMl3OhO2PW0ReCwVo4=</DigestValue>
+          </Reference>
+          <Reference URI="#to">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>WJY/1O0H8IUAqLZ8ITgYOMTjZ6vuQvTt7uGvK1kBj+k=</DigestValue>
+          </Reference>
+          <Reference URI="#sec-ts">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>THJ7cDn3ZNWopF0Gb/OTAD348YMRFba8b/8rEh8tKoc=</DigestValue>
+          </Reference>
+          <Reference URI="#sec-binsectoken">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>L9KrFLoriGm/aN3IMFPU+TYP24jSn0Xl0yT7myrt74E=</DigestValue>
+          </Reference>
+          <Reference URI="#body">
+            <Transforms>
+              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>SH5UFdrYpBhVOV8tPE/anhw2w/ub815dj1CFM/nMGxQ=</DigestValue>
+          </Reference>
+        </SignedInfo>
+        <SignatureValue>debc1qXqDT4sbPWQ6NocY1RrpayuCkEPkXzwlYSeyaNOBdm7nNzX1WkAgANxBINZP6A3/pn7hZo/kVDtBmdt6hW8zlx7BmV4QYmEM/TsydNgkbyS8byNjZjxxXQ+8Ekx+OM2dMUfXQDLEhegI94apkHsZINj2iYZclxTnprXZIYnUZGaxgOHAt3TFKh6sh+5f7CW9BgzHhesEXEbzKcF7GglgPCprUtXX0XG6sWKUTT+cOMpdY1jKVS/DlWwLdJiaDxPxl1rdqYbcbfqAEXHRcVI2GaH7h8+du/oFfFfEHtDqsJYj8l5QhKsMImNMKyqRsMEtIq9pSNJtjfnXWxn0Q==</SignatureValue>
+        <KeyInfo>
+          <SecurityTokenReference xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+            <Reference URI="#sec-binsectoken" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" />
+          </SecurityTokenReference>
+        </KeyInfo>
+      </Signature>
+    </Security>
+  </s:Header>
+  <s:Body wsu:Id="body">
+    <trust:RequestSecurityToken Context="1f63c4fe-509e-47c9-bd78-eb9f342579be" xmlns:trust="http://docs.oasis-open.org/ws-sx/ws-trust/200512">
+      <trust:RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</trust:RequestType>
+      <trust:TokenType>http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0</trust:TokenType>
+      <trust:KeyType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/PublicKey</trust:KeyType>
+      <wsp:AppliesTo xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+          <wsa:Address>http://wsp12.oioidws-net.dk/service/service/1</wsa:Address>
+        </wsa:EndpointReference>
+      </wsp:AppliesTo>
+      <trust:Claims Dialect="http://docs.oasis-open.org/wsfed/authorization/200706/authclaims">
+        <auth:ClaimType Uri="dk:gov:saml:attribute:CvrNumberIdentifier" Optional="false" xmlns:auth="http://docs.oasis-open.org/wsfed/authorization/200706">
+          <auth:Value>11111111</auth:Value>
+        </auth:ClaimType>
+      </trust:Claims>
+      <trust:UseKey>
+        <BinarySecurityToken p2:Id="uuid:fba124a4-38a9-40c0-a550-89e2594c09c8" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" xmlns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:p2="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">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</BinarySecurityToken>
+      </trust:UseKey>
+      <trust:Issuer>
+        <a:EndpointReference>
+          <a:Address>https://saml.n2adgangsstyring.eksterntest-stoettesystemerne.dk/runtime</a:Address>
+        </a:EndpointReference>
+      </trust:Issuer>
+    </trust:RequestSecurityToken>
+  </s:Body>
+</s:Envelope>
