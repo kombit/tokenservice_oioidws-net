@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Digst.OioIdws.WspSvcExample.HelloWorld" CodeBehind="HelloWorld.svc.cs" %>
