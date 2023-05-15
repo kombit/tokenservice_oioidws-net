@@ -1,0 +1,67 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "../HelloWorld-Hok.wsdl"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, ServiceReference"
+    ],
+    "references": [
+      "E:\\Projects\\Digst.OioIdws\\Examples\\Digst.OioIdws.DotnetCoreWscJavaWspExample\\bin\\Debug\\net6.0\\Digst.OioIdws.CommonCore.dll",
+      "E:\\Projects\\Digst.OioIdws\\Examples\\Digst.OioIdws.DotnetCoreWscJavaWspExample\\bin\\Debug\\net6.0\\Digst.OioIdws.OioWsTrustCore.dll",
+      "E:\\Projects\\Digst.OioIdws\\Examples\\Digst.OioIdws.DotnetCoreWscJavaWspExample\\bin\\Debug\\net6.0\\Digst.OioIdws.SoapCore.dll",
+      "E:\\Projects\\Digst.OioIdws\\Examples\\Digst.OioIdws.DotnetCoreWscJavaWspExample\\bin\\Debug\\net6.0\\Digst.OioIdws.WscCore.dll",
+      "E:\\Projects\\Digst.OioIdws\\Examples\\Digst.OioIdws.DotnetCoreWscJavaWspExample\\bin\\Debug\\net6.0\\Digst.OioIdws.WscExampleCommon.dll",
+      "log4net, {log4net, 2.0.14}",
+      "Microsoft.Bcl.AsyncInterfaces, {Microsoft.Bcl.AsyncInterfaces, 5.0.0}",
+      "Microsoft.Extensions.Caching.Abstractions, {Microsoft.Extensions.Caching.Abstractions, 6.0.0}",
+      "Microsoft.Extensions.Caching.Memory, {Microsoft.Extensions.Caching.Memory, 6.0.1}",
+      "Microsoft.Extensions.DependencyInjection.Abstractions, {Microsoft.Extensions.DependencyInjection.Abstractions, 6.0.0}",
+      "Microsoft.Extensions.Logging.Abstractions, {Microsoft.Extensions.Logging.Abstractions, 6.0.0}",
+      "Microsoft.Extensions.ObjectPool, {Microsoft.Extensions.ObjectPool, 5.0.10}",
+      "Microsoft.Extensions.Options, {Microsoft.Extensions.Options, 6.0.0}",
+      "Microsoft.Extensions.Primitives, {Microsoft.Extensions.Primitives, 6.0.0}",
+      "Microsoft.IdentityModel.Abstractions, {Microsoft.IdentityModel.Abstractions, 6.25.0}",
+      "Microsoft.IdentityModel.Logging, {Microsoft.IdentityModel.Logging, 6.25.0}",
+      "Microsoft.IdentityModel.Protocols.WsTrust, {Microsoft.IdentityModel.Protocols.WsTrust, 6.8.0}",
+      "Microsoft.IdentityModel.Tokens, {Microsoft.IdentityModel.Tokens, 6.25.0}",
+      "Microsoft.IdentityModel.Tokens.Saml, {Microsoft.IdentityModel.Tokens.Saml, 6.25.0}",
+      "Microsoft.IdentityModel.Xml, {Microsoft.IdentityModel.Xml, 6.25.0}",
+      "Microsoft.Win32.SystemEvents, {Microsoft.Win32.SystemEvents, 6.0.0}",
+      "System.Configuration.ConfigurationManager, {System.Configuration.ConfigurationManager, 6.0.0}",
+      "System.Drawing.Common, {System.Drawing.Common, 6.0.0}",
+      "System.Formats.Asn1, {System.Formats.Asn1, 6.0.0}",
+      "System.IO, {System.IO, 4.3.0}",
+      "System.Reflection.DispatchProxy, {System.Reflection.DispatchProxy, 4.7.1}",
+      "System.Runtime, {System.Runtime, 4.3.0}",
+      "System.Runtime.Caching, {System.Runtime.Caching, 6.0.0}",
+      "System.Runtime.CompilerServices.Unsafe, {System.Runtime.CompilerServices.Unsafe, 6.0.0}",
+      "System.Security.AccessControl, {System.Security.AccessControl, 6.0.0}",
+      "System.Security.Cryptography.Cng, {System.Security.Cryptography.Cng, 4.5.0}",
+      "System.Security.Cryptography.Pkcs, {System.Security.Cryptography.Pkcs, 6.0.1}",
+      "System.Security.Cryptography.ProtectedData, {System.Security.Cryptography.ProtectedData, 6.0.0}",
+      "System.Security.Cryptography.Xml, {System.Security.Cryptography.Xml, 5.0.0}",
+      "System.Security.Permissions, {System.Security.Permissions, 6.0.0}",
+      "System.Security.Principal.Windows, {System.Security.Principal.Windows, 5.0.0}",
+      "System.ServiceModel, {System.ServiceModel.Primitives, 4.10.0}",
+      "System.ServiceModel.Duplex, {System.ServiceModel.Duplex, 4.10.0}",
+      "System.ServiceModel.Federation, {System.ServiceModel.Federation, 4.10.0}",
+      "System.ServiceModel.Http, {System.ServiceModel.Http, 4.10.0}",
+      "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 4.10.0}",
+      "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 4.10.0}",
+      "System.ServiceModel.Security, {System.ServiceModel.Security, 4.10.0}",
+      "System.Text.Encoding, {System.Text.Encoding, 4.3.0}",
+      "System.Threading.Tasks, {System.Threading.Tasks, 4.3.0}",
+      "System.Windows.Extensions, {System.Windows.Extensions, 6.0.0}",
+      "System.Xml.ReaderWriter, {System.Xml.ReaderWriter, 4.3.0}",
+      "System.Xml.XmlDocument, {System.Xml.XmlDocument, 4.3.0}"
+    ],
+    "sync": true,
+    "targetFramework": "net6.0",
+    "typeReuseMode": "All"
+  }
+}
