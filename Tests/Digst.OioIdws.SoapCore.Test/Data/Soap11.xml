@@ -1,0 +1,23 @@
+﻿<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="http://www.w3.org/2005/08/addressing" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+	<s:Header>
+		<a:Action s:mustUnderstand="1" u:Id="action">http://tempuri.org/IHelloWorld/HelloNone</a:Action>
+		<MessageID xmlns="http://www.w3.org/2005/08/addressing" u:Id="msgid">urn:uuid:7c6f70cc-242d-4762-9da0-c78c2905eb74</MessageID>
+		<a:ReplyTo u:Id="replyto">
+			<a:Address>http://www.w3.org/2005/08/addressing/anonymous</a:Address>
+		</a:ReplyTo>
+		<Framework s:mustUnderstand="1" b:profile="urn:liberty:sb:profile:basic" version="2.0" xmlns="urn:liberty:sb:2006-08" xmlns:b="urn:liberty:sb:profile" u:Id="lib" />
+		<a:To s:mustUnderstand="1" u:Id="to">https://Digst.OioIdws.Wsp:9899/HelloWorld</a:To>
+		<o:Security s:mustUnderstand="1" xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+			<u:Timestamp u:Id="sec-ts">
+				<u:Created>2022-10-12T06:56:53.733Z</u:Created>
+				<u:Expires>2022-10-12T07:01:53.733Z</u:Expires>
+			</u:Timestamp><o:SecurityTokenReference p7:TokenType="http://docs.oasis-open.org/wss/oasis-wss-saml-token-profile-1.1#SAMLV2.0" u:Id="sec-str" xmlns:p7="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd">
+			</o:SecurityTokenReference>
+		</o:Security>
+	</s:Header>
+	<s:Body u:Id="body">
+		<HelloNone xmlns="http://tempuri.org/">
+			<name>Schultz</name>
+		</HelloNone>
+	</s:Body>
+</s:Envelope>

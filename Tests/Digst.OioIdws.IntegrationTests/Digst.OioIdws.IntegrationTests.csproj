@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.10.2" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="4.10.2" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.10.2" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.10.2" />
+    <PackageReference Include="Titanium.Web.Proxy" Version="3.2.0" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.ServiceModel.Security" Version="4.10.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Examples\Digst.OioIdws.WscExampleCommon\Digst.OioIdws.WscExampleCommon.csproj" />
+    <ProjectReference Include="..\..\Source\Digst.OioIdws.OioWsTrustCore\Digst.OioIdws.OioWsTrustCore.csproj" />
+    <ProjectReference Include="..\..\Source\Digst.OioIdws.SoapCore\Digst.OioIdws.SoapCore.csproj" />
+    <ProjectReference Include="..\..\Source\Digst.OioIdws.WscCore\Digst.OioIdws.WscCore.csproj" />
+    <ProjectReference Include="..\Digst.OioIdws.Common.TestUtils\Digst.OioIdws.Common.TestUtils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+</Project>
