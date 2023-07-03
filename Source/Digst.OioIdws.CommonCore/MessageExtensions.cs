@@ -159,7 +159,7 @@ namespace Digst.OioIdws.CommonCore
 
             var xmlDictionaryReader = XmlDictionaryReader.CreateTextReader(messageAsBytes,
                 XmlDictionaryReaderQuotas.Max);
-            var newMessage = Message.CreateMessage(xmlDictionaryReader, int.MaxValue, request.Version);
+            var newMessage = Message.CreateMessage(xmlDictionaryReader, int.MaxValue, MessageVersion.CreateVersion(System.ServiceModel.EnvelopeVersion.Soap11, AddressingVersion.WSAddressing10));
             newMessage.Properties.CopyProperties(request.Properties);
             return newMessage;
         }

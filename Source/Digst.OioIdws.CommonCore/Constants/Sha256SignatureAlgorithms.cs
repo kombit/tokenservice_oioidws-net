@@ -13,6 +13,8 @@ namespace Digst.OioIdws.CommonCore.Constants
 #pragma warning restore S1075 // URIs should not be hardcoded
 #pragma warning disable S1075 // URIs should not be hardcoded
         public const string XmlEncSha256Url = @"http://www.w3.org/2001/04/xmlenc#sha256"; // Digest algorithm
+        public const string XmlEncSha1Url = @"http://www.w3.org/2000/09/xmldsig#sha1";
+        public const string XmlDsigRsaSha1Url = @"http://www.w3.org/2000/09/xmldsig#rsa-sha1";
 #pragma warning restore S1075 // URIs should not be hardcoded
     }
 }

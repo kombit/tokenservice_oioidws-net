@@ -134,10 +134,32 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
         {
             var namespaceManager = new XmlNamespaceManager(new NameTable());
             namespaceManager.AddNamespace("s", Namespaces.S12Namespace);
+            namespaceManager.AddNamespace(Namespaces.WssePrefix, Namespaces.Wsse10Namespace);
+            namespaceManager.AddNamespace("a", Namespaces.WsaNamespace);
+
             var envelopeElement = xDocument.XPathSelectElement("/s:Envelope", namespaceManager);
+            var headerElement = xDocument.XPathSelectElement("/s:Envelope/s:Header", namespaceManager);
+            var securityElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/s:Security", namespaceManager);
+            var actionElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:Action", namespaceManager);
+            var bodyElement = xDocument.XPathSelectElement("/s:Envelope/s:Body", namespaceManager);
+
 
             // This namespace is required. If not added then Id attributes is not correctly prefixed with "wsu" and RST becomes invalid according to standard.
+
             envelopeElement.Add(new XAttribute(XNamespace.Xmlns + Namespaces.WsuPrefix, Namespaces.WsuNamespace));
+
+            XNamespace xmlns = Namespaces.S11Namespace;
+            envelopeElement.Name = xmlns + "Envelope";
+            headerElement.Name = xmlns + "Header";
+            bodyElement.Name = xmlns + "Body";
+
+            actionElement.Attributes().Where(x => x.Name.LocalName.Equals("mustUnderstand")).First().Remove();
+            actionElement.SetAttributeValue(xmlns + "mustUnderstand", "1");
+            
+
+            var a = xDocument.Root.Attributes();
+            a.Where(x => x.Value.Equals(Namespaces.S12Namespace)).First().Remove();
+            xDocument.Root.Add(new XAttribute(XNamespace.Xmlns + Namespaces.S12Prefix, Namespaces.S11Namespace));
         }
 
         private void ManipulateHeader(XDocument xDocument)
@@ -172,7 +194,8 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
         {
             var namespaceManager = new XmlNamespaceManager(new NameTable());
             namespaceManager.AddNamespace("a", Namespaces.WsaNamespace);
-            namespaceManager.AddNamespace("s", Namespaces.S12Namespace);
+            namespaceManager.AddNamespace("wsa", Namespaces.WsaNamespace);
+            namespaceManager.AddNamespace("s", Namespaces.S11Namespace);
             namespaceManager.AddNamespace("vs", Namespaces.VsDebuggerNamespace);
             namespaceManager.AddNamespace("vcf", Namespaces.WcfDiagnosticsNamespace);
             namespaceManager.AddNamespace("wst13", Namespaces.Wst13Namespace);
@@ -204,24 +227,24 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
 
         private void AddIssuerToRequest(XDocument xDocument, XmlNamespaceManager namespaceManager)
         {
-            var issuerElement = xDocument.XPathSelectElement("/s:Envelope/s:Body/trust:RequestSecurityToken/trust:Issuer", namespaceManager);
-            if (issuerElement == null)
-            {
-                issuerElement = new XElement(XName.Get("Issuer", Namespaces.Wst13Namespace));
-                var endpointRefElement = new XElement(XName.Get("EndpointReference", Namespaces.WsaNamespace));
-                endpointRefElement.Add(new XElement(XName.Get("Address", Namespaces.WsaNamespace), _configuration.StsConfiguration.EntityIdentifier));
-                issuerElement.Add(endpointRefElement);
+            //var issuerElement = xDocument.XPathSelectElement("/s:Envelope/s:Body/trust:RequestSecurityToken/trust:Issuer", namespaceManager); TODO Dette skal vi vidst ikke. Så kommenteret ud indtil videre.
+            //if (issuerElement == null)
+            //{
+            //    issuerElement = new XElement(XName.Get("Issuer", Namespaces.Wst13Namespace));
+            //    var endpointRefElement = new XElement(XName.Get("EndpointReference", Namespaces.WsaNamespace));
+            //    endpointRefElement.Add(new XElement(XName.Get("Address", Namespaces.WsaNamespace), _configuration.StsConfiguration.EntityIdentifier));
+            //    issuerElement.Add(endpointRefElement);
 
-                var requestSecurityTokenElement = xDocument.XPathSelectElement("/s:Envelope/s:Body/trust:RequestSecurityToken", namespaceManager);
-                requestSecurityTokenElement.Add(issuerElement);
-            }
+            //    var requestSecurityTokenElement = xDocument.XPathSelectElement("/s:Envelope/s:Body/trust:RequestSecurityToken", namespaceManager);
+            //    requestSecurityTokenElement.Add(issuerElement);
+            //}
         }
 
         private static XmlNamespaceManager CreateXmlNamespaceManagerForRequestBody()
         {
             var namespaceManager = new XmlNamespaceManager(new NameTable());
             namespaceManager.AddNamespace("wsp12", Namespaces.Wsp12Namespace);
-            namespaceManager.AddNamespace("s", Namespaces.S12Namespace);
+            namespaceManager.AddNamespace("s", Namespaces.S11Namespace);
             namespaceManager.AddNamespace("wsa", Namespaces.WsaNamespace);
             namespaceManager.AddNamespace("trust", Namespaces.Wst13Namespace);
             namespaceManager.AddNamespace("wsp", Namespaces.Wsp12Namespace);
@@ -248,7 +271,7 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
 
         private static DateTime ValidateTimestamp(XDocument xDocument, XmlNamespaceManager namespaceManager)
         {
-            var messageExpireTimeElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/wsse:Security/wsu:Timestamp/wsu:Expires", namespaceManager);
+            var messageExpireTimeElement = xDocument.XPathSelectElement("/soap:Envelope/soap:Header/wsse:Security/wsu:Timestamp/wsu:Expires", namespaceManager);
             var messageExpireZuluTime = GetPatchedDateTime(messageExpireTimeElement.Value);
 
             // Expiry time is currently not on the format specified by the spec. The spec says yyyy-MM-ddTHH:mm:ssZ but yyyy-MM-ddTHH:mm:ss.fffZ is currently retrieved.
@@ -261,7 +284,7 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
             }
 
             // Verify life time of RSTS
-            var rstsExpireTimeElement = xDocument.XPathSelectElement("/s:Envelope/s:Body/wst:RequestSecurityTokenResponseCollection/wst:RequestSecurityTokenResponse/wst:Lifetime/wsu:Expires", namespaceManager);
+            var rstsExpireTimeElement = xDocument.XPathSelectElement("/soap:Envelope/soap:Body/wst:RequestSecurityTokenResponseCollection/wst:RequestSecurityTokenResponse/wst:Lifetime/wsu:Expires", namespaceManager);
             var rstsExpireZuluTime = GetPatchedDateTime(rstsExpireTimeElement.Value);
             if (currentZuluTime >= rstsExpireZuluTime)
             {
@@ -274,10 +297,10 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
 
         private void ValidateReplayAttack(XDocument xDocument, XmlNamespaceManager namespaceManager, DateTime messageExpireZuluTime)
         {
-            var signatureValueElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/wsse:Security/d:Signature/d:SignatureValue", namespaceManager);
+            var signatureValueElement = xDocument.XPathSelectElement("/soap:Envelope/soap:Header/wsse:Security/ds:Signature/ds:SignatureValue", namespaceManager);
             if (_configuration.ReplayAttackCache.DoesKeyExist(signatureValueElement.Value))
             {
-                var relatesToElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/wsa:RelatesTo",
+                var relatesToElement = xDocument.XPathSelectElement("/soap:Envelope/soap:Header/wsa:RelatesTo",
                     namespaceManager);
                 Logger.Instance.Error($"Replay attack detected. Response of message with id: {relatesToElement.Value}, Signature: {signatureValueElement.Value}");
                 throw new MessageSecurityException("Replay attack detected. Response of message with id: " + relatesToElement.Value);
@@ -301,11 +324,11 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
         private static XmlNamespaceManager CreateXmlNamespaceManagerForResponse()
         {
             var namespaceManager = new XmlNamespaceManager(new NameTable());
-            namespaceManager.AddNamespace("s", Namespaces.S12Namespace);
+            namespaceManager.AddNamespace("soap", Namespaces.S11Namespace);
             namespaceManager.AddNamespace("wsse", Namespaces.Wsse10Namespace);
             namespaceManager.AddNamespace("wsu", Namespaces.WsuNamespace);
             namespaceManager.AddNamespace("wst", Namespaces.Wst13Namespace);
-            namespaceManager.AddNamespace("d", Namespaces.SignatureNamespace);
+            namespaceManager.AddNamespace("ds", Namespaces.SignatureNamespace);
             namespaceManager.AddNamespace("wsa", Namespaces.WsaNamespace);
             return namespaceManager;
         }
@@ -358,7 +381,7 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
         {
             var namespaceManager = new XmlNamespaceManager(new NameTable());
             namespaceManager.AddNamespace("a", Namespaces.WsaNamespace);
-            namespaceManager.AddNamespace("s", Namespaces.S12Namespace);
+            namespaceManager.AddNamespace("s", Namespaces.S11Namespace);
             namespaceManager.AddNamespace("wsse", Namespaces.Wsse10Namespace);
             namespaceManager.AddNamespace("wsu", Namespaces.WsuNamespace);
             return namespaceManager;
@@ -390,7 +413,7 @@ namespace Digst.OioIdws.OioWsTrustCore.ProtocolChannel
         private XElement BuildSecurityElement()
         {
             var securityElement = new XElement(XName.Get("Security", Namespaces.Wsse10Namespace));
-            securityElement.Add(new XAttribute(XName.Get("mustUnderstand", Namespaces.S12Namespace), "1"));
+            securityElement.Add(new XAttribute(XName.Get("mustUnderstand", Namespaces.S11Namespace), "1"));
             securityElement.Add(BuildTimestampElement());
             securityElement.Add(BuildBinarySecurityTokenElement(_configuration.ClientCertificate));
             return securityElement;

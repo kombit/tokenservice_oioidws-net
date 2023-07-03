@@ -51,35 +51,35 @@ namespace Digst.OioIdws.CommonCore
                 .Select(x => x.Attribute("URI").Value).ToList();
 
             // Ensure that the Body (at correct position - not wrapped) is signed
-            VerifyRequiredElement(xDocument, refUries, "/s:Envelope/s:Body", namespaceManager, "Body '{0}' is required and must be signed.");
+            VerifyRequiredElement(xDocument, refUries, "/soap:Envelope/soap:Body", namespaceManager, "Body '{0}' is required and must be signed.");
 
             // Action
-            var xAction = xDocument.XPathSelectElement("/s:Envelope/s:Header/wsa:Action", namespaceManager);
+            var xAction = xDocument.XPathSelectElement("/soap:Envelope/soap:Header/wsa:Action", namespaceManager);
             // As "OIO IDWS SOAP profile (V1.1)", The <wsa:Action> header is no longer mandated.
             if (xAction != null)
             {
-                VerifyRequiredElement(xDocument, refUries, "/s:Envelope/s:Header/wsa:Action", namespaceManager,
+                VerifyRequiredElement(xDocument, refUries, "/soap:Envelope/soap:Header/wsa:Action", namespaceManager,
                 "Action '{0}' is required and must be signed.");
             }
 
-            var isWsTrustMessage = xDocument.XPathSelectElement("/s:Envelope/s:Body/wst:RequestSecurityTokenResponseCollection", namespaceManager) != null;
+            var messageId= xDocument.XPathSelectElement("/soap:Envelope/soap:Body/wst:RequestSecurityTokenResponseCollection", namespaceManager);
             // MessageID is only required for the SOAP response from WSP ([OIO-IDWS-SOAP]), not STS. KOMBIT STS response does not include the MessageID header
-            if (!isWsTrustMessage)
+            if (messageId != null)
             {
-                VerifyRequiredElement(xDocument, refUries, "/s:Envelope/s:Header/wsa:MessageID", namespaceManager, "MessageID '{0}' is required and must be signed.");
+                VerifyRequiredElement(xDocument, refUries, "/soap:Envelope/soap:Header/wsa:MessageID", namespaceManager, "MessageID '{0}' is required and must be signed.");
             }
 
             // RelatesTo
-            VerifyRequiredElement(xDocument, refUries, "/s:Envelope/s:Header/wsa:RelatesTo", namespaceManager, "RelatesTo '{0}' is required and must be signed.");
+            VerifyRequiredElement(xDocument, refUries, "/soap:Envelope/soap:Header/wsa:RelatesTo", namespaceManager, "RelatesTo '{0}' is required and must be signed.");
 
             // Timestamp
-            VerifyRequiredElement(xDocument, refUries, "/s:Envelope/s:Header/wsse:Security/wsu:Timestamp", namespaceManager, "Security's Timestamp '{0}' is required and must be signed.");
+            VerifyRequiredElement(xDocument, refUries, "/soap:Envelope/soap:Header/wsse:Security/wsu:Timestamp", namespaceManager, "Security's Timestamp '{0}' is required and must be signed.");
         }
 
         private static XmlNamespaceManager CreateNamespaceManager(EnvelopeVersion envelopeVersion)
         {
             var namespaceManager = new XmlNamespaceManager(new NameTable());
-            namespaceManager.AddNamespace("s", envelopeVersion == EnvelopeVersion.Soap11 ? Namespaces.S11Namespace : Namespaces.S12Namespace);
+            namespaceManager.AddNamespace("soap", Namespaces.S11Namespace);
             namespaceManager.AddNamespace("wsse", Namespaces.Wsse10Namespace);
             namespaceManager.AddNamespace("wsu", Namespaces.WsuNamespace);
             namespaceManager.AddNamespace("wsa", Namespaces.WsaNamespace);

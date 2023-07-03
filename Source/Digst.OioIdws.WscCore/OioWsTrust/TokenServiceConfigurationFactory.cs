@@ -29,7 +29,7 @@ namespace Digst.OioIdws.WscCore.OioWsTrust
             var soapVersion = EnvelopeVersion.Soap11;
             if (wscConfiguration.WspSoapVersion == "1.2")
             {
-                soapVersion = EnvelopeVersion.Soap12;
+                soapVersion = EnvelopeVersion.Soap11;
             }
 
             X509Certificate2 stsCertificate = CertificateUtil.GetCertificate(wscConfiguration.StsCertificate);

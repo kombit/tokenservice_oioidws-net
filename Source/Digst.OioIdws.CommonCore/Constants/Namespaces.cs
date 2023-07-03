@@ -18,6 +18,7 @@ namespace Digst.OioIdws.CommonCore.Constants
         public const string WsaNamespace = "http://www.w3.org/2005/08/addressing";
         public const string S11Namespace = "http://schemas.xmlsoap.org/soap/envelope/";
         public const string S12Namespace = "http://www.w3.org/2003/05/soap-envelope";
+        //public const string S12Namespace = "http://schemas.xmlsoap.org/soap/envelope/";
         public const string Wsp12Namespace = "http://schemas.xmlsoap.org/ws/2004/09/policy"; // Corresponds to WS-Policy 1.2.
         public const string WspNamespace = "http://schemas.xmlsoap.org/ws/2002/12/policy"; // Corresponds to WS-SecurityPolicy
         public const string Wst13Namespace = "http://docs.oasis-open.org/ws-sx/ws-trust/200512";

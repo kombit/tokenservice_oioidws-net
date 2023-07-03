@@ -32,7 +32,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Utils
             // Apply private key, canonicalization method and signature method
             var signedXml = new SignedXmlWithIdResolvement(doc);
             signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
-            signedXml.SignedInfo.SignatureMethod = Sha256SignatureAlgorithms.XmlDsigMoreRsaSha256Url;
+            signedXml.SignedInfo.SignatureMethod = Sha256SignatureAlgorithms.XmlDsigRsaSha1Url; // TODO Her vi skal ændre signing.
             signedXml.SigningKey = cert.PrivateKey;
 
             // Make a reference for each element that must be signed.
@@ -40,7 +40,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Utils
             {
                 var reference = new Reference("#" + id);
                 reference.AddTransform(new XmlDsigExcC14NTransform());
-                reference.DigestMethod = Sha256SignatureAlgorithms.XmlEncSha256Url;
+                reference.DigestMethod = Sha256SignatureAlgorithms.XmlEncSha1Url;
                 signedXml.AddReference(reference);
             }
 
@@ -110,7 +110,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Utils
         {
             // Append the computed signature. The signature must be placed as the sibling of the BinarySecurityToken element.
             var nsManager = new XmlNamespaceManager(doc.NameTable);
-            nsManager.AddNamespace(Namespaces.S12Prefix, Namespaces.S12Namespace);
+            nsManager.AddNamespace(Namespaces.S12Prefix, Namespaces.S11Namespace);
             nsManager.AddNamespace(Namespaces.WssePrefix, Namespaces.Wsse10Namespace);
             var securityNode = doc.SelectSingleNode("/" + Namespaces.S12Prefix + ":Envelope/" + Namespaces.S12Prefix + ":Header/" + Namespaces.WssePrefix + ":Security", nsManager);
             var binarySecurityTokenNode = doc.SelectSingleNode("/" + Namespaces.S12Prefix + ":Envelope/" + Namespaces.S12Prefix + ":Header/" + Namespaces.WssePrefix + ":Security/" + Namespaces.WssePrefix + ":BinarySecurityToken", nsManager);

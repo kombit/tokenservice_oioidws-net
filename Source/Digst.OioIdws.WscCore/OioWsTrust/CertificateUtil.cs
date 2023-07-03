@@ -22,7 +22,7 @@ namespace Digst.OioIdws.WscCore.OioWsTrust
                 store.Open(OpenFlags.ReadOnly);
 
                 var certificate = store.Certificates.Find(x509FindType, findValue,
-                    true).OfType<X509Certificate2>().FirstOrDefault();
+                    false).OfType<X509Certificate2>().FirstOrDefault();
 
                 if (certificate == null)
                     throw new InvalidOperationException(

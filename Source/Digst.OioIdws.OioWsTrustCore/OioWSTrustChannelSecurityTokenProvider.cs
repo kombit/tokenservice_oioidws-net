@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Protocols.WsTrust;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Selectors;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Description;
 using System.ServiceModel.Federation;
@@ -113,19 +115,19 @@ namespace Digst.OioIdws.OioWsTrustCore
                 AddAdditionalXmlElement(wstrustRequest, "OnBehalfOf", ProxyOnBehalfOfSecurityToken.Certificate);
             }
             
-            if (SecurityTokenRequirement.TryGetProperty(SecurityTokenRequirementConstants.CvrProperty, out string cvr))
-            {
-                wstrustRequest.Claims = new Claims("http://docs.oasis-open.org/wsfed/authorization/200706/authclaims",
-                    new List<ClaimType>
-                    {
-                        new ClaimType
-                        {
-                            Uri = "dk:gov:saml:attribute:CvrNumberIdentifier",
-                            IsOptional = false,
-                            Value = cvr
-                        }
-                    });
-            }
+            //if (SecurityTokenRequirement.TryGetProperty(SecurityTokenRequirementConstants.CvrProperty, out string cvr)) // TODO Vi skal ikke understøtte claims for nu. Så derfor er dette kommenteret ud. 
+            //{
+            //    wstrustRequest.Claims = new Claims("http://docs.oasis-open.org/wsfed/authorization/200706/authclaims",
+            //        new List<ClaimType>
+            //        {
+            //            new ClaimType
+            //            {
+            //                Uri = "dk:gov:saml:attribute:CvrNumberIdentifier",
+            //                IsOptional = false,
+            //                Value = cvr
+            //            }
+            //        });
+            //}
 
             if (SecurityTokenRequirement.TryGetProperty(SecurityTokenRequirementConstants.LifetimeProperty, out Lifetime lifetime))
             {
@@ -149,14 +151,24 @@ namespace Digst.OioIdws.OioWsTrustCore
 
             using (var useKeyWriter = XmlWriter.Create(sb))
             {
-                useKeyWriter.WriteStartElement("trust", elementName, Namespaces.Wst13Namespace);
+                var x = certificate.GetRSAPublicKey().ToXmlString(false);
 
-                useKeyWriter.WriteStartElement("BinarySecurityToken", Namespaces.Wsse10Namespace);
-                useKeyWriter.WriteAttributeString("Id", Namespaces.WsuNamespace, "uuid:" + Guid.NewGuid());
-                useKeyWriter.WriteAttributeString("ValueType", null, Common.X509V3TokenProfile);
-                useKeyWriter.WriteAttributeString("EncodingType", Common.Base64BinaryEncodingType);
-                byte[] rawCertData = certificate.GetRawCertData();
-                useKeyWriter.WriteBase64(rawCertData, 0, rawCertData.Length);
+
+                var xml = new XmlDocument();
+                xml.LoadXml(x);
+                var rsaKeyValue = xml.FirstChild;
+                var modulus = rsaKeyValue.ChildNodes.Item(0);
+                var exponent = rsaKeyValue.ChildNodes.Item(1);
+
+                useKeyWriter.WriteStartElement("trust", elementName, Namespaces.Wst13Namespace);
+                useKeyWriter.WriteStartElement("ds", "KeyInfo", Namespaces.SignatureNamespace);
+                useKeyWriter.WriteStartElement("ds", "KeyValue", Namespaces.SignatureNamespace);
+                useKeyWriter.WriteStartElement("ds", "RSAKeyValue", Namespaces.SignatureNamespace);
+                useKeyWriter.WriteElementString("Modulus", Namespaces.SignatureNamespace, modulus.InnerText);
+                useKeyWriter.WriteElementString("Exponent", Namespaces.SignatureNamespace, exponent.InnerText);
+
+                useKeyWriter.WriteEndElement();
+                useKeyWriter.WriteEndElement();
                 useKeyWriter.WriteEndElement();
                 useKeyWriter.WriteEndElement();
                 useKeyWriter.Flush();
