@@ -33,7 +33,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Bindings
             }
 
             elements.Add(new OioWsTrustBindingElement(_stsTokenServiceConfiguration, _stsAuthenticationCase));
-            // Assuming that all STS uses SOAP 1.2
+            // Assuming that all STS uses SOAP 1.1
             elements.Add(new TextMessageEncodingBindingElement(MessageVersion.CreateVersion(EnvelopeVersion.Soap11, AddressingVersion.WSAddressing10),
                 Encoding.UTF8));
             // ManualAddressing must be true in order to make sure that wsa header elements are not altered in the HttpsTransportChannel which happens after xml elements have been digitally signed.

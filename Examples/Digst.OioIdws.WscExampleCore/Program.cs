@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.IdentityModel.Tokens;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 
 namespace Digst.OioIdws.WscExampleCore
@@ -29,7 +30,17 @@ namespace Digst.OioIdws.WscExampleCore
             {
                 // Get token from STS.
                 IStsTokenService stsTokenService = new StsTokenServiceCache(stsConfiguration);
-                var securityToken = (GenericXmlSecurityToken)stsTokenService.GetToken();
+                GenericXmlSecurityToken securityToken;
+                try
+                {
+                    securityToken = (GenericXmlSecurityToken)stsTokenService.GetToken();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    Logger.Instance.Error(e.Message, e);
+                    throw;
+                }
                 Console.WriteLine("Token: " + securityToken.TokenXml.OuterXml);
 
                 // Configure HTTP client to use mTLS
@@ -43,7 +54,7 @@ namespace Digst.OioIdws.WscExampleCore
                     var assertionString = securityToken.TokenXml.OuterXml;
                     var content = new StringContent("saml-token=" + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(assertionString)));
 
-                    var authorizeResult = client.PostAsync("https://videoapi.vconf-stage.dk/videoapi/token", content).Result;
+                    var authorizeResult = client.PostAsync("https://portalapi.signatur.dk/token", content).Result;
                     if(!authorizeResult.IsSuccessStatusCode)
                     {
                         throw new Exception(authorizeResult.ToString());
@@ -56,11 +67,15 @@ namespace Digst.OioIdws.WscExampleCore
 
                     // Call service
                     // Add Auhtorization header.
+                    var jsonContent = new StringContent(@"{""PeriodFrom"":""2023-05-01T00:00:00"",""PeriodTo"":""2023-07-01T23:59:59""}", Encoding.UTF8, "application/json");
                     var request = new HttpRequestMessage()
                     {
-                        RequestUri = new Uri("https://videoapi.vconf-stage.dk/videoapi/meetings/b2670f63-04e0-46ec-bf61-1cbd0baa15d3"),
+                        RequestUri = new Uri("https://portalapi.signatur.dk/recruitment/statistics/1"),
+                        Method = HttpMethod.Post,
+                        Content = jsonContent
                     };
                     request.Headers.Add("Authorization", "Holder-of-key " +  accessToken?.AccessToken);
+                    request.Headers.Add("accept", "application/json");
                     
                     // Call service and print response
                     var serviceResult = client.SendAsync(request).Result;
