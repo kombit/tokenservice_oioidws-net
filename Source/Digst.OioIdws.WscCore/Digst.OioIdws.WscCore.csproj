@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Digst.OioIdws.WscCore is a .Net Core based reference implementation of the OIOIDWS 1.1 profile. The Toolkit can be used by clients (e.g. service providers) to act as a Web Service Consumer (WSC).</Description>
-    <PackageProjectUrl>http://digitaliser.dk/resource/526486</PackageProjectUrl>
-    <Authors>Digitaliseringsstyrelsen</Authors>
+    <Description>Kombit.OioIdws.WscCore is a .Net Core based reference implementation of the OIOIDWS 1.1 profile. The Toolkit can be used by clients (e.g. service providers) to act as a Web Service Consumer (WSC).</Description>
+    <PackageProjectUrl>https://kombit.dk/</PackageProjectUrl>
+    <Authors>KOMBIT</Authors>
     <PackageIcon>icon.png</PackageIcon>
     <PackageTags>OIOIDWS;WSC;KOMBIT;KOMBIT-STS;NEMLOGIN;NEMLOG-IN</PackageTags>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
@@ -27,6 +27,7 @@
 
   <PropertyGroup>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PackageId>Kombit.OioIdws.WscCore</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

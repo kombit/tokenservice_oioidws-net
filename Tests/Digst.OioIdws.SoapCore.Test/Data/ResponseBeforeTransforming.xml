@@ -1,0 +1,139 @@
+﻿<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Header>
+		<sbf:Framework ns1:profile="urn:liberty:sb:profile:basic" version="2.0" wsu:Id="_4A33A8B602023AF10216642009407783902097" xmlns:sbf="urn:liberty:sb:2006-08" xmlns:ns1="urn:liberty:sb:profile" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" />
+		<Action wsu:Id="_4A33A8B602023AF10216642009407783902095" xmlns="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">http://serviceplatformen.dk/xml/wsdl/soap11/CPR/CPRQueryService/2/CPRQueryWebServicePortType/callCPRPersonListResponse</Action>
+		<MessageID wsu:Id="_4A33A8B602023AF10216642009407783902093" xmlns="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">urn:uuid:c0f16e89-56d0-4e84-9bd4-c45c2a1f1b53</MessageID>
+		<To wsu:Id="_4A33A8B602023AF10216642009407783902096" xmlns="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">http://www.w3.org/2005/08/addressing/anonymous</To>
+		<RelatesTo wsu:Id="_4A33A8B602023AF10216642009407783902094" xmlns="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">urn:uuid:559ccf0d-ce5b-4698-a932-991c3521bac8</RelatesTo>
+		<wsse:Security soap:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+			<wsse:BinarySecurityToken EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3" wsu:Id="X509-4A33A8B602023AF10216642009407783902098">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</wsse:BinarySecurityToken>
+			<wsu:Timestamp wsu:Id="TS-4A33A8B602023AF10216642009407783902091">
+				<wsu:Created>2022-09-26T14:02:20.778Z</wsu:Created>
+				<wsu:Expires>2022-09-26T14:07:30.778Z</wsu:Expires>
+			</wsu:Timestamp>
+			<ds:Signature Id="SIG-4A33A8B602023AF10216642009407783902101" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:SignedInfo>
+					<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:CanonicalizationMethod>
+					<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></ds:SignatureMethod>
+					<ds:Reference URI="#TS-4A33A8B602023AF10216642009407783902091">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>3xy8PLc2uOlnD5BbN6bu4EmjmGs8ZbkxerM9edIs4XM=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#_4A33A8B602023AF10216642009407783902092">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>EKU5VB4cVH8saC0P9fIKUO6n4MzlOSC0FdgHCAHwsSo=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#_4A33A8B602023AF10216642009407783902093">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>7cjdKzOJtt2Kv0z6C4ns2wd/U60iaZwEXdaO2LYaBU0=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#_4A33A8B602023AF10216642009407783902094">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>yzmYzBGO/Aom9qCgdyn1XzGSxpzLQwjNpGo1XcVANkM=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#_4A33A8B602023AF10216642009407783902095">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>KRUXfArbanY/n6GsCBhzgbMZnPKpcDcY9wo5ehPlzm0=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#_4A33A8B602023AF10216642009407783902096">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>vgau0fWon/1LZmEO7aptHhbK+y4+umFI6Rm+wv5xhjg=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#_4A33A8B602023AF10216642009407783902097">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>MjYhw02aLL8WIegMF1vYrmpplaYrArJ5ufgyMAnEhxg=</ds:DigestValue>
+					</ds:Reference>
+					<ds:Reference URI="#X509-4A33A8B602023AF10216642009407783902098">
+						<ds:Transforms>
+							<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:Transform>
+						</ds:Transforms>
+						<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></ds:DigestMethod>
+						<ds:DigestValue>d/vH2OPUxQH0Ih6+wgPUbLIoct1DfPfIV62e2Wg1nCI=</ds:DigestValue>
+					</ds:Reference>
+				</ds:SignedInfo>
+				<ds:SignatureValue>h7uLihBuMMt8MH+bTZ5eY1v5BGSiemN1PSRHCL5snctkjFAQxXP2qN6qScsCE1yZ2uHc4TF9o8omLsIyu8my0fJAo21TtC8dgGkS+yQfU3s4eRfpioMdQPK4wB7g4uXsHFRxN/ptVk+fWXgDbrh1DLA59e2m2Hm5lK1jHhx1rzECJGygx7Qd7uDjMYRFyqTFq0BrkvDa+3LstKo3J9NU+Pn1t/yAdHfBWKI37GUgokOOK+YGbVlwY8Vp/STl3ydrvxEs7kKVDBRQlEuyzzp4XEbgmheqDnSZMbPR4lkxyIQcXrUprLWqly8eYSEiUXsx11aT3AP7Ei42ZkYgep8T6w==</ds:SignatureValue>
+				<ds:KeyInfo Id="KI-4A33A8B602023AF10216642009407783902099">
+					<wsse:SecurityTokenReference wsu:Id="STR-4A33A8B602023AF10216642009407783902100">
+						<wsse:Reference URI="#X509-4A33A8B602023AF10216642009407783902098" ValueType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3"></wsse:Reference>
+					</wsse:SecurityTokenReference>
+				</ds:KeyInfo>
+			</ds:Signature>
+		</wsse:Security>
+	</soap:Header>
+	<soap:Body wsu:Id="_4A33A8B602023AF10216642009407783902092" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+		<ns4:callCPRPersonListResponse xmlns:ns4="http://serviceplatformen.dk/xml/wsdl/soap11/CPR/CPRQueryService/2/" xmlns="http://serviceplatformen.dk/xml/schemas/CallContext/1/" xmlns:ns2="http://serviceplatformen.dk/xml/schemas/AuthorityContext/1/" xmlns:ns3="http://serviceplatformen.dk/xml/schemas/InvocationContext/1/" xmlns:ns5="http://serviceplatformen.dk/xml/schemas/ServiceplatformFault/1/" xmlns:ns6="http://serviceplatformen.dk/xml/schemas/cpr/PNR/1/">
+			<ns4:antal>2</ns4:antal>
+			<ns4:person>
+				<ns4:gaeldendePersonnummer>2106541216</ns4:gaeldendePersonnummer>
+				<ns4:navn>
+					<ns4:fornavn>Sara</ns4:fornavn>
+					<ns4:efternavn>Nørgaard</ns4:efternavn>
+					<ns4:adrnavn>Sara Nørgaard</ns4:adrnavn>
+				</ns4:navn>
+				<ns4:adresse>
+					<ns4:vejnavn>Rebekkavej</ns4:vejnavn>
+					<ns4:husnummer>001</ns4:husnummer>
+					<ns4:etage>02</ns4:etage>
+					<ns4:sidedoer>tv</ns4:sidedoer>
+					<ns4:standardadresse>Rebekkavej 1 2 tv</ns4:standardadresse>
+					<ns4:postnummer>2900</ns4:postnummer>
+					<ns4:postdistrikt>Hellerup</ns4:postdistrikt>
+					<ns4:kommune>
+						<ns4:navn>Københavns kommune</ns4:navn>
+						<ns4:nummer>64942212</ns4:nummer>
+						<ns4:kode>101</ns4:kode>
+					</ns4:kommune>
+				</ns4:adresse>
+				<ns4:kontaktadresse />
+				<ns4:status>1</ns4:status>
+				<ns4:adressebeskyttelse>false</ns4:adressebeskyttelse>
+			</ns4:person>
+			<ns4:person>
+				<ns4:gaeldendePersonnummer>2304403708</ns4:gaeldendePersonnummer>
+				<ns4:navn>
+					<ns4:fornavn>Pia</ns4:fornavn>
+					<ns4:efternavn>Stæhr</ns4:efternavn>
+					<ns4:adrnavn>Pia Stæhr</ns4:adrnavn>
+				</ns4:navn>
+				<ns4:adresse>
+					<ns4:vejnavn>Judithsvej</ns4:vejnavn>
+					<ns4:husnummer>017</ns4:husnummer>
+					<ns4:etage>st</ns4:etage>
+					<ns4:sidedoer>tv</ns4:sidedoer>
+					<ns4:standardadresse>Judithsvej 17 st tv</ns4:standardadresse>
+					<ns4:postnummer>2900</ns4:postnummer>
+					<ns4:postdistrikt>Hellerup</ns4:postdistrikt>
+					<ns4:kommune>
+						<ns4:navn>Københavns kommune</ns4:navn>
+						<ns4:nummer>64942212</ns4:nummer>
+						<ns4:kode>101</ns4:kode>
+					</ns4:kommune>
+				</ns4:adresse>
+				<ns4:kontaktadresse />
+				<ns4:status>1</ns4:status>
+				<ns4:adressebeskyttelse>false</ns4:adressebeskyttelse>
+			</ns4:person>
+		</ns4:callCPRPersonListResponse>
+	</soap:Body>
+</soap:Envelope>

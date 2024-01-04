@@ -13,7 +13,7 @@ This is the codebase that the `OIOIDWS.Net.Core` components are built from. All 
 ### Resource links
 
 * [Project maintenance][project]
-* [Nuget packages (prefixed Digst.OioIdws)][nuget]
+* [Nuget packages (prefixed Kombit.OioIdws)][nuget]
 * [Code repository][github]
 
 [project]: https://digitaliser.dk/group/705156

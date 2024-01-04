@@ -20,7 +20,7 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.0" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.2" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="6.29.0" />
     <PackageReference Include="System.ServiceModel.Federation" Version="4.10.2" />

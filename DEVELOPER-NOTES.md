@@ -19,8 +19,8 @@ Just click 'Yes' to install the certificate.
 
 ### Build the packages with Azure DevOps Pipeline
 
-* Ensure API key to digitaliseringsstyrelsen's nuget account is set up correctly for the "Digst.OioIdws.WscCore Nuget" pipeline
-* Push packages to NuGet by running the "Digst.OioIdws.WscCore Nuget" pipeline on Azure DevOps
+* Ensure API key to digitaliseringsstyrelsen's nuget account is set up correctly for the "Kombit.OioIdws.WscCore Nuget" pipeline
+* Push packages to NuGet by running the "Kombit.OioIdws.WscCore Nuget" pipeline on Azure DevOps
 
 ### Build the packages with PowerShell script
 
@@ -34,13 +34,13 @@ Just click 'Yes' to install the certificate.
 	* The result will look like this:
 	```
 	PS E:\Projects\Digst.OioIdws\Build> .\BuildPackages.ps1 4.0.59 4.0.59.0 -pushPackages -nugetApiKey oy2pejwpntfc.....
-	pushing package Digst.OioIdws.WscCore
-	Pushing Digst.OioIdws.WscCore.4.0.59.nupkg to 'https://www.nuget.org/api/v2/package'...
+	pushing package Kombit.OioIdws.WscCore
+	Pushing Kombit.OioIdws.WscCore.4.0.59.nupkg to 'https://www.nuget.org/api/v2/package'...
 	  PUT https://www.nuget.org/api/v2/package/
 	warn : License missing. See how to include a license within the package: https://aka.ms/nuget/authoring-best-practices#licensing.,Readme missing. Go to https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices#readme learn How to include a readme file within the package.
 	  Created https://www.nuget.org/api/v2/package/ 1958ms
 	Your package was pushed.
-	Pushing Digst.OioIdws.WscCore.4.0.59.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+	Pushing Kombit.OioIdws.WscCore.4.0.59.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
 	  PUT https://www.nuget.org/api/v2/symbolpackage/
 	  Created https://www.nuget.org/api/v2/symbolpackage/ 451ms
 	Your package was pushed.
