@@ -15,6 +15,7 @@ namespace Digst.OioIdws.OioWsTrustCore
         private static readonly MemoryCache TokenCache = new MemoryCache(typeof(StsTokenServiceCache).FullName, new NameValueCollection { { "pollingInterval", "00:00:30" } });
         private readonly TimeSpan _cacheClockSkew;
         private readonly string _wspEndpointId;
+        private readonly string _cvr;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StsTokenServiceCache"/> class.
@@ -28,6 +29,7 @@ namespace Digst.OioIdws.OioWsTrustCore
             _stsTokenService = new StsTokenService(config);
             _cacheClockSkew = config.CacheClockSkew;
             _wspEndpointId = config.WspConfiguration.EndpointId;
+            _cvr = config.StsConfiguration.Cvr;
         }
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace Digst.OioIdws.OioWsTrustCore
         protected internal override SecurityToken GetToken(StsAuthenticationCase stsAuthenticationCase, Microsoft.IdentityModel.Tokens.SecurityToken? authenticationToken)
         {
             // Generate a cache key. If an authentication token has been provided then prefix with the ID of that token; otherwise we just use the endpoint ID
-            var cacheKey = authenticationToken != null ? authenticationToken.Id + _wspEndpointId : _wspEndpointId;
+            var cacheKey = authenticationToken != null ? authenticationToken.Id + _cvr + _wspEndpointId : _cvr + _wspEndpointId;
 
             var securityToken = (SecurityToken)TokenCache.Get(cacheKey);
 
