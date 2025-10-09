@@ -11,6 +11,8 @@ namespace Digst.OioIdws.CommonCore.Test
     public class CertificateValidatorTest
     {
         [TestMethod]
+        // Note that this test may contains other errors related to revocation checking OR root CA not being trusted (if the Ps script is not run before running the test)   
+        // This test is only to verify that the exception contains the expected text about the certificate being expired
         public void ValidateAExpiredCertificate_ChainTrust_WillThrowException()
         {
             // Arrange
@@ -21,7 +23,8 @@ namespace Digst.OioIdws.CommonCore.Test
             var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate SERIALNUMBER=CVR:30808460-UID:25351738 + CN=NETS DANID A/S - TU VOCES gyldig, O=NETS DANID A/S // CVR:30808460, C=DK; E85AC4E2A5ED9CE4CCFEF42F3F9DE1E4A521CDDD failed. Replace the certificate or change the certificateValidationMode. A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.");
+            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-90892939, O=Testorganisation nr. 90892939, SERIALNUMBER=UI:DK-O:G:f1eed326-bca5-4133-88a6-a639b66aaa54, CN=hhp-test-ch-demo-17may; 11DD0FC0BC0B0CEE24DCB02AFE3D985124AB14B4 failed.");
+            StringAssert.Contains(exception.Message, "A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.");
         }
 
         [TestMethod]
@@ -39,7 +42,8 @@ namespace Digst.OioIdws.CommonCore.Test
             var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate SERIALNUMBER=CVR:30808460-UID:25351738 + CN=NETS DANID A/S - TU VOCES gyldig, O=NETS DANID A/S // CVR:30808460, C=DK; E85AC4E2A5ED9CE4CCFEF42F3F9DE1E4A521CDDD failed. Replace the certificate or change the certificateValidationMode. A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.");
+            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-90892939, O=Testorganisation nr. 90892939, SERIALNUMBER=UI:DK-O:G:f1eed326-bca5-4133-88a6-a639b66aaa54, CN=hhp-test-ch-demo-17may; 11DD0FC0BC0B0CEE24DCB02AFE3D985124AB14B4 failed.");
+            StringAssert.Contains(exception.Message, "A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.");
         }
 
         [TestMethod]
@@ -81,7 +85,8 @@ namespace Digst.OioIdws.CommonCore.Test
             var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate SERIALNUMBER=CVR:30808460-FID:87102701 + CN=TU GENEREL FOCES spærret (funktionscertifikat), O=NETS DANID A/S // CVR:30808460, C=DK; A93DF35F7A5E7AF9E2F2737DB2163C5D3716819F failed.");
+            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-92273980, O=Testorganisation nr. 92273980, SERIALNUMBER=UI:DK-O:G:e77d87a5-9f75-4aee-b139-e15eafed0894, CN=usercert-02-revoked; 64305D1145DC3572CD88B54084C06DE0E1A638D3 failed.");
+            StringAssert.Contains(exception.Message, "The certificate is revoked.");
         }
 
         [TestMethod]
@@ -167,7 +172,8 @@ namespace Digst.OioIdws.CommonCore.Test
             var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate SERIALNUMBER=CVR:30808460-FID:87102701 + CN=TU GENEREL FOCES spærret (funktionscertifikat), O=NETS DANID A/S // CVR:30808460, C=DK; A93DF35F7A5E7AF9E2F2737DB2163C5D3716819F failed.");
+            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-92273980, O=Testorganisation nr. 92273980, SERIALNUMBER=UI:DK-O:G:e77d87a5-9f75-4aee-b139-e15eafed0894, CN=usercert-02-revoked; 64305D1145DC3572CD88B54084C06DE0E1A638D3 failed.");
+            StringAssert.Contains(exception.Message, "The certificate is revoked.");
         }
 
         [TestMethod]

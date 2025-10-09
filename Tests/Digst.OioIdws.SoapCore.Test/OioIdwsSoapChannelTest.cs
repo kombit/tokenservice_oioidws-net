@@ -20,9 +20,9 @@ namespace Digst.OioIdws.SoapCore.Test
         public void Request_Will_ModifyMessageAccordingToWspNeeds_Before_Sending_Request()
         {
             // Arrange
-            var sut = CreateSut();
+            var sut = CreateSut12();
             var messageXml = XDocument.Load(@"Data\MessageBeforeTransforming.xml");
-            var message = Message.CreateMessage(MessageVersion.Soap11WSAddressingAugust2004, "Test");
+            var message = Message.CreateMessage(MessageVersion.Soap12WSAddressingAugust2004, "Test");
             message = messageXml.ToMessage(message);
             var id = new UniqueId(Guid.Parse("0cbeecb3-8fe4-40c2-837d-db77ffce3801"));
             message.Headers.MessageId = id;
@@ -39,16 +39,16 @@ namespace Digst.OioIdws.SoapCore.Test
             xmlDocument.LoadXml(xDocument.ToString());
             var signatureNodeList = xmlDocument.GetElementsByTagName("Signature", Namespaces.SignatureNamespace);
             Assert.IsNotNull(signatureNodeList);
-            Assert.AreEqual(2, signatureNodeList.Count); // One is in Header's Assertion
+            Assert.AreEqual(1, signatureNodeList.Count); // Only one is in Header's Assertion
         }
 
         [TestMethod]
         public void BeginRequest_Will_ModifyMessageAccordingToWspNeeds_Before_Sending_Request()
         {
             // Arrange
-            var sut = CreateSut();
+            var sut = CreateSut12();
             var messageXml = XDocument.Load(@"Data\MessageBeforeTransforming.xml");
-            var message = Message.CreateMessage(MessageVersion.Soap11, "Test");
+            var message = Message.CreateMessage(MessageVersion.Soap12WSAddressingAugust2004, "Test");
             message = messageXml.ToMessage(message);
 
             // Act
@@ -63,7 +63,7 @@ namespace Digst.OioIdws.SoapCore.Test
             xmlDocument.LoadXml(xDocument.ToString());
             var signatureNodeList = xmlDocument.GetElementsByTagName("Signature", Namespaces.SignatureNamespace);
             Assert.IsNotNull(signatureNodeList);
-            Assert.AreEqual(2, signatureNodeList.Count); // One is in Header's Assertion
+            Assert.AreEqual(2, signatureNodeList.Count); // One is in Header's Assertion, modifing the response is done in the EndRequest
         }
 
         [TestMethod]
@@ -110,6 +110,27 @@ namespace Digst.OioIdws.SoapCore.Test
             clientCredential.ClientCertificate.Certificate = Certificates.TestCertificate;
             bindingContext.BindingParameters.Add(clientCredential);
             var tokenParams = new FederatedSecurityTokenParameters(new TestSecurityToken(), MessageVersion.CreateVersion(EnvelopeVersion.Soap11, AddressingVersion.WSAddressing10),
+                stsTokenServiceConfiguration, "https://test.service");
+
+            var bindingElement = new OioIdwsSoapBindingElement(tokenParams);
+            var result = bindingElement.BuildChannelFactory<IRequestChannel>(bindingContext);
+
+            var sut = new OioIdwsSoapChannel(new OioIdwsSoapChannelFactory(result, tokenParams), new TestRequestChannel(), tokenParams);
+            return sut;
+        }
+
+        private static OioIdwsSoapChannel CreateSut12()
+        {
+            var stsConfiguration = new StsConfiguration("testendpoint", "teststsid", "12345678", Certificates.StsCertificate);
+            var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap12, Certificates.StsCertificate);
+
+            var stsTokenServiceConfiguration = new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, Certificates.TestCertificate);
+
+            var bindingContext = new BindingContext(new CustomBinding(new List<BindingElement> { new HttpsTransportBindingElement() }), new BindingParameterCollection());
+            var clientCredential = new FederatedChannelClientCredentials();
+            clientCredential.ClientCertificate.Certificate = Certificates.TestCertificate;
+            bindingContext.BindingParameters.Add(clientCredential);
+            var tokenParams = new FederatedSecurityTokenParameters(new TestSecurityToken(), MessageVersion.CreateVersion(EnvelopeVersion.Soap12, AddressingVersion.WSAddressingAugust2004),
                 stsTokenServiceConfiguration, "https://test.service");
 
             var bindingElement = new OioIdwsSoapBindingElement(tokenParams);

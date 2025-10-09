@@ -287,7 +287,7 @@ namespace Digst.OioIdws.IntegrationTests
             ProxyServerHelper.ExecuteWithBeforeResponse(() =>
             {
                 var ex = Assert.ThrowsException<FaultException>(() => stsTokenService.GetToken());
-                Assert.AreEqual("An error occurred when verifying security for the message.", ex.Message);
+                Assert.AreEqual("SOAP message has expired.", ex.Message);
             }, OnWaitRequest);
         }
 

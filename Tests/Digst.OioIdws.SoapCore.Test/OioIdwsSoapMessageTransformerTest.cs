@@ -24,15 +24,15 @@ public class OioIdwsSoapMessageTransformerTest
         // Arrange
         var clientCert = Certificates.TestCertificate;
         var stsConfiguration = new StsConfiguration("testendpoint", "teststsid", "12345678", Certificates.StsCertificate);
-        var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap11, Certificates.StsCertificate);
+        var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap12, Certificates.StsCertificate);
 
         var stsTokenServiceConfiguration = new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, clientCert);
 
-        var tokenParams = new FederatedSecurityTokenParameters(new TestSecurityToken(), MessageVersion.CreateVersion(EnvelopeVersion.Soap11, AddressingVersion.WSAddressing10),
+        var tokenParams = new FederatedSecurityTokenParameters(new TestSecurityToken(), MessageVersion.CreateVersion(EnvelopeVersion.Soap12, AddressingVersion.WSAddressing10),
             stsTokenServiceConfiguration, "https://test.service");
 
         var messageXml = XDocument.Load(@"Data\MessageBeforeTransforming.xml");
-        var message = Message.CreateMessage(MessageVersion.Soap11, "Test");
+        var message = Message.CreateMessage(MessageVersion.Soap12WSAddressingAugust2004, "Test");
         message = messageXml.ToMessage(message);
 
         // Act
@@ -91,7 +91,7 @@ public class OioIdwsSoapMessageTransformerTest
     {
         var namespaceManager = new XmlNamespaceManager(new NameTable());
         namespaceManager.AddNamespace("a", Namespaces.WsaNamespace);
-        namespaceManager.AddNamespace("s", Namespaces.S11Namespace);
+        namespaceManager.AddNamespace("s", Namespaces.S12Namespace);
         namespaceManager.AddNamespace("o", Namespaces.Wsse10Namespace);
         namespaceManager.AddNamespace("vs", Namespaces.VsDebuggerNamespace);
         namespaceManager.AddNamespace("vcf", Namespaces.WcfDiagnosticsNamespace);
