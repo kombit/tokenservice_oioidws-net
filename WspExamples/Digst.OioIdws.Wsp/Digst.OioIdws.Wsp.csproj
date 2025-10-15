@@ -51,6 +51,7 @@
     <Compile Include="BasicPrivilegeProfile\PrivilegeList.cs" />
     <Compile Include="DecryptedAssertionSupport\DecryptedSaml2SecurityToken.cs" />
     <Compile Include="DecryptedAssertionSupport\DecryptedSaml2SecurityTokenHandler.cs" />
+    <Compile Include="OcesX509CertificateValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubjectConfirmationDataSupport\StrTransformedSaml2SecurityToken.cs" />
     <Compile Include="SubjectConfirmationDataSupport\SubjectConfirmationDataSaml2SecurityTokenHandler.cs" />

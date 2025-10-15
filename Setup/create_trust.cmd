@@ -1,6 +1,6 @@
 @echo off
 
-set KEYTOOL="C:\Program Files\Java\jdk1.8.0_351\bin\keytool.exe"
+set KEYTOOL="%JAVA_HOME%\bin\keytool.exe"
 
 set PWD00="Test1234"
 set CERT_STS=".\kombitsts.cer"

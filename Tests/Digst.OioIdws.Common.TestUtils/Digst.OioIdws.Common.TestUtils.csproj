@@ -36,4 +36,13 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\sts.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\stssigvalidation.cer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

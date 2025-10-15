@@ -114,7 +114,7 @@ The `trustedIssuers` list must contain the thumbprint of the signing certificate
 <issuerNameRegistry>
   <trustedIssuers>
     <add name="sts.oioidws-net.dk" thumbprint="8081b09446a396ba0ff9b7159d07d8c90f7db9ae"/>
-    <add name="test-ekstern-adgangsstyring" thumbprint="7002cf221d1d3979eca623599e43e0b6b4c8920c"/>
+    <add name="test-ekstern-adgangsstyring" thumbprint="0aa7a193f18d095f7e2ce09d892178c9682b7924"/>
   </trustedIssuers>
 </issuerNameRegistry>      
 ```
@@ -143,11 +143,11 @@ Required steps to run the Holder-Of-Key Java WSP:
 * Create a ``JAVA_HOME`` environment variable with value "C:\Program Files\Java\jdk1.8.0_351"
 * Add "%JAVA_HOME%\bin" to the ``Path`` environment variable
 * Add the STS certificate into service's ``trust.jks``
-  * Access https://n2adgangsstyring.eksterntest-stoettesystemerne.dk/runtime/oauth2/certs.idp to get the certificate, or ask KOMBIT if you want to use another instance of KOMBIT STS, and save it as ``kombitsts.cer``.
+  * Access https://n2adgangsstyring.eksterntest-stoettesystemerne.dk/runtime/oauth2/certs.idp to get the certificate, or ask KOMBIT if you want to use another instance of KOMBIT STS, and save it as ``kombitsts.cer``. Note that, the kombitsts.cer must include “-----BEGIN CERTIFICATE-----” and “-----END CERTIFICATE-----” - this is a requirement from Java’s keytool.
   * Follow the instructions in the ``Update STS certificate`` at https://github.com/digst/OIOIDWS.Java#troubleshooting. Note that we are going to use the Holder-Of-Key WSP at "OIOIDWS.Java\examples\oio-idws-soap\service-hok"
   * You can copy the ``/Setup/create_trust.cmd`` file to ``OIOIDWS.Java\examples\oio-idws-soap\service-hok\src\main\resources`` along with the ``kombitsts.cer`` to import the STS certificate to ``trust.jks``
 * Add restricted audience
-	* Locate the``OIOIDWS.Java\examples\oio-idws-soap\service-hok\src\main\java\service\saml\igstSamlAssertionValidator.java`` class and add the audience URI (http://wsp12.oioidws-java.dk/service/service/1)
+	* Locate the``OIOIDWS.Java\examples\oio-idws-soap\service-hok\src\main\java\service\saml\DigstSamlAssertionValidator.java`` class and add the audience URI (http://wsp12.oioidws-java.dk/service/service/1)
 	* See https://github.com/digst/OIOIDWS.Java/blob/master/examples/oio-idws-soap/service-hok/src/main/java/service/saml/DigstSamlAssertionValidator.java for how audiences are validated.
 * Run the Java WSP: Follow this guide https://github.com/digst/OIOIDWS.Java#start-the-service-hok-java-wsp
 	* Download Maven package https://maven.apache.org/download.cgi and install it https://maven.apache.org/install.html.

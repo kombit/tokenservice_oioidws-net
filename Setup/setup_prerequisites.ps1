@@ -12,42 +12,44 @@ write-host "WARNING: This will rebind the SSL certificate on 0.0.0.0:443 on your
 $certpassword  = ConvertTo-SecureString -String "Test1234" -AsPlainText -Force
 $certpassword2 = ConvertTo-SecureString -String "test1234" -AsPlainText -Force
 $kombitcertpassword  = ConvertTo-SecureString -String "ZAQ!2wsx" -AsPlainText -Force
+$certpasswordWsp = ConvertTo-SecureString -String "N6kfQ:BLQly?" -AsPlainText -Force
 
-# Add "TRUST2048 Systemtest VII Primary CA" to Trusted ROOT CA
+# Add "Den Danske Stat OCES rod-CA.cer" to Trusted ROOT CA
 write-host "Installing serviceprovider's root certificate"
-$trust2048SystemtestRootCertificate = Import-Certificate '..\misc\certificates\TRUST2048 Systemtest VII Primary CA.cer' -CertStoreLocation Cert:\LocalMachine\Root
-write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($trust2048SystemtestRootCertificate.Thumbprint) in LocalMachine\Root. This ensures that the other certificate are trusted on your machine and browser"
+$oces3RootCertificate = Import-Certificate '..\misc\certificates\CA\Den Danske Stat OCES rod-CA.cer' -CertStoreLocation Cert:\LocalMachine\Root
+write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($oces3RootCertificate.Thumbprint) in LocalMachine\Root. This ensures that the other certificate are trusted on your machine and browser"
 
-# Add "TRUST2048 Systemtest XIX CA.cer" to Intermediate Certification Authorities
-write-host "Installing serviceprovider's intermediate certificate"
-$trust2048SystemtestIntermediateCertificate19 = Import-Certificate '..\misc\certificates\TRUST2048 Systemtest VII Primary CA.cer' -CertStoreLocation Cert:\LocalMachine\CA
-write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($trust2048SystemtestIntermediateCertificate19.Thumbprint) in LocalMachine\CA. This ensures that the other certificate are trusted on your machine and browser"
+$oces3RootCertificate = Import-Certificate '..\misc\certificates\CA\Den Danske Stat OCES rod-CA TEST.cer' -CertStoreLocation Cert:\LocalMachine\Root
+write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($oces3RootCertificate.Thumbprint) in LocalMachine\Root. This ensures that the other certificate are trusted on your machine and browser"
 
-# Add "TRUST2408 Systemtest XXII CA.cer" to Intermediate Certification Authorities
+# Add "Den Danske Stat OCES udstedende-CA 1.cer" to Intermediate Certification Authorities
 write-host "Installing serviceprovider's intermediate certificate"
-$trust2048SystemtestIntermediateCertificate22 = Import-Certificate '..\misc\certificates\TRUST2048 Systemtest VII Primary CA.cer' -CertStoreLocation Cert:\LocalMachine\CA
-write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($trust2048SystemtestIntermediateCertificate22.Thumbprint) in LocalMachine\CA. This ensures that the other certificate are trusted on your machine and browser"
+$oces3IntermediateCertificate = Import-Certificate '..\misc\certificates\CA\Den Danske Stat OCES udstedende-CA 1.cer' -CertStoreLocation Cert:\LocalMachine\CA
+write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($oces3IntermediateCertificate.Thumbprint) in LocalMachine\CA. This ensures that the other certificate are trusted on your machine and browser"
+
+$oces3IntermediateCertificate = Import-Certificate '..\misc\certificates\CA\Den Danske Stat OCES udstedende-CA 1 TEST.cer' -CertStoreLocation Cert:\LocalMachine\CA
+write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($oces3IntermediateCertificate.Thumbprint) in LocalMachine\CA. This ensures that the other certificate are trusted on your machine and browser"
 
 # Install SSL Certificates
 
 write-host "Installing soap WSP ssl certificate"
-$soapWspSslcertificate = Import-PfxCertificate '..\misc\certificates\SOAP WSP SSL (digst.oioidws.wsp).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\My
-$soapWspSslcertificate = Import-PfxCertificate '..\misc\certificates\SOAP WSP SSL (digst.oioidws.wsp).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+$soapWspSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\SOAP WSP SSL (digst.oioidws.wsp).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\My
+$soapWspSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\SOAP WSP SSL (digst.oioidws.wsp).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\TrustedPeople
 write-host -ForegroundColor Green "Installed soap WSP example certificate $($soapWspSslcertificate.Thumbprint) in LocalMachine\My and LocalMachine\TrustedPeople. This ensures the certificate is trusted on your machine and browser"
 
 write-host "Installing rest AS ssl certificate"
-$restAsSslcertificate = Import-PfxCertificate '..\misc\certificates\REST AS SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\My
-$restAsSslcertificate = Import-PfxCertificate '..\misc\certificates\REST AS SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+$restAsSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\REST AS SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\My
+$restAsSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\REST AS SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\TrustedPeople
 write-host -ForegroundColor Green "Installed rest AS example ssl certificate $($restAsSslcertificate.Thumbprint) in LocalMachine\My and LocalMachine\TrustedPeople. This ensures the certificate is trusted on your machine and browser"
 
 write-host "Installing rest WSP ssl certificate"
-$restWspSslcertificate = Import-PfxCertificate '..\misc\certificates\REST WSP SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\My
-$restWspSslcertificate = Import-PfxCertificate '..\misc\certificates\REST WSP SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+$restWspSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\REST WSP SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\My
+$restWspSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\REST WSP SSL.pfx' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\TrustedPeople
 write-host -ForegroundColor Green "Installed rest WSP example ssl certificate $($restWspSslcertificate.Thumbprint) in LocalMachine\My and LocalMachine\TrustedPeople. This ensures the certificate is trusted on your machine and browser"
 
 write-host "Installing boostrap example ssl certificate"
-$bootstrapSslcertificate = Import-PfxCertificate '..\misc\certificates\SP SSL (oiosaml-net.dk).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\My
-$bootstrapSslcertificate = Import-PfxCertificate '..\misc\certificates\SP SSL (oiosaml-net.dk).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+$bootstrapSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\SP SSL (oiosaml-net.dk).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\My
+$bootstrapSslcertificate = Import-PfxCertificate '..\misc\certificates\SSL\SP SSL (oiosaml-net.dk).pfx' -Password $certpassword2 -CertStoreLocation Cert:\LocalMachine\TrustedPeople
 write-host -ForegroundColor Green "Installed boostrap example ssl certificate $($bootstrapSslcertificate.Thumbprint) in LocalMachine\My and LocalMachine\TrustedPeople. This ensures the certificate is trusted on your machine and browser"
 
 # Install SP signing certificate
@@ -58,14 +60,14 @@ $serviceprovidercertificate = Import-PfxCertificate '..\misc\certificates\SP and
 write-host -ForegroundColor Green "Installed serviceprovider's signing certificate $($serviceprovidercertificate.Thumbprint) in LocalMachine\My and LocalMachine\TrustedPeople. This ensures the certificate is trusted on your machine and browser"
 
 write-host "Installing KOMBIT serviceprovider's signing certificate"
-$kombitserviceprovidercertificate = Import-PfxCertificate '..\misc\certificates\KOMBIT AS - WSC_Core.pfx' -CertStoreLocation Cert:\LocalMachine\My
+$kombitserviceprovidercertificate = Import-PfxCertificate '..\misc\certificates\KOMBIT_AS_-_WSC_Core.p12' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\My
 write-host -ForegroundColor Green "Installed KOMBIT serviceprovider's signing certificate $($kombitserviceprovidercertificate.Thumbprint) in  LocalMachine\My. This ensures the certificate is trusted on your machine and browser"
 
 # Install Service certificate
 
 write-host "Installing WSP certificate for signature checks - beware: the WSC only requires the public key part to verify signatures from the WSP"
-$wspCertificate = Import-PfxCertificate '..\misc\certificates\WSP (wsp.oioidws-net.dk TEST).p12' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\My
-$wspCertificate = Import-PfxCertificate '..\misc\certificates\WSP (wsp.oioidws-net.dk TEST).p12' -Password $certpassword -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+$wspCertificate = Import-PfxCertificate '..\misc\certificates\OIOIDWS.NET_WSP_-_Test_3DES.p12' -Password $certpasswordWsp -CertStoreLocation Cert:\LocalMachine\My
+$wspCertificate = Import-PfxCertificate '..\misc\certificates\OIOIDWS.NET_WSP_-_Test_3DES.p12' -Password $certpasswordWsp -CertStoreLocation Cert:\LocalMachine\TrustedPeople
 write-host -ForegroundColor Green "Installed WSP example certificate $($wspCertificate.Thumbprint) in LocalMachine\My."
 
 # Install STS certificate
@@ -80,7 +82,7 @@ write-host -ForegroundColor Green "Installed KOMBIT STS certificate $($kombitSts
 
 # Install OBO certificate
 write-host "Installing OBO certificate"
-$oboCertificate = Import-Certificate '..\misc\certificates\KOMBIT AS - WSC_Core_OBO_T.cer' -CertStoreLocation Cert:\LocalMachine\TrustedPeople
+$oboCertificate = Import-Certificate '..\misc\certificates\KOMBIT_AS_-_WSC_Core_OBO.cer' -CertStoreLocation Cert:\LocalMachine\TrustedPeople
 write-host -ForegroundColor Green "Installed OBO certificate $($oboCertificate.Thumbprint) in LocalMachine\TrustedPeople."
 
 # Java - BEGIN

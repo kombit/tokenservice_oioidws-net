@@ -80,7 +80,7 @@ To make code written in the previous section work, your application needs the fo
                     storeLocation="LocalMachine"
                     storeName="TrustedPeople"
                     x509FindType="FindByThumbprint"/>
-    <serviceCertificate findValue="ca30025a4981147505b8d7a59052ac40c7033688"
+    <serviceCertificate findValue="d738a7d146f07e02c16cf28dac11e742e4ce9582"
                         storeLocation="LocalMachine"
                         storeName="TrustedPeople"
                         x509FindType="FindByThumbprint"/>
@@ -121,7 +121,7 @@ Configuration wscConfiguration = new Configuration
        StoreLocation = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine,
        StoreName = System.Security.Cryptography.X509Certificates.StoreName.TrustedPeople,
        X509FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint,
-       FindValue = "7002cf221d1d3979eca623599e43e0b6b4c8920c"
+       FindValue = "0aa7a193f18d095f7e2ce09d892178c9682b7924"
     },
 
     WspEndpoint = "https://kombitwsp12.azurewebsites.net/HelloWorld.svc",
@@ -132,14 +132,14 @@ Configuration wscConfiguration = new Configuration
         StoreLocation = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine,
         StoreName = System.Security.Cryptography.X509Certificates.StoreName.TrustedPeople,
         X509FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint,
-        FindValue = "ca30025a4981147505b8d7a59052ac40c7033688"
+        FindValue = "d738a7d146f07e02c16cf28dac11e742e4ce9582"
     },
     ClientCertificate = new Certificate 
     {
         StoreLocation = System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine,
         StoreName = System.Security.Cryptography.X509Certificates.StoreName.My,
         X509FindType = System.Security.Cryptography.X509Certificates.X509FindType.FindByThumbprint,
-        FindValue = "79cfb7a45b74f4c64ea408503002df7d1143ef40"
+        FindValue = "8ea87dcbe73df96418d2f33cb48e2b1c7fa1e6b0"
     },
 
     Cvr = "11111111",

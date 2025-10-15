@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Claims;
 using System.Xml;
 
 namespace Digst.OioIdws.Wsp.SubjectConfirmationDataSupport
@@ -39,6 +36,12 @@ namespace Digst.OioIdws.Wsp.SubjectConfirmationDataSupport
             TryResolveIssuerToken(assertion, Configuration.IssuerTokenResolver, out issuerToken);
 
             return new StrTransformedSaml2SecurityToken(assertion, keys, issuerToken);
+        }
+
+        public override ReadOnlyCollection<ClaimsIdentity> ValidateToken(SecurityToken token)
+        {
+            CertificateValidator = new OcesX509CertificateValidator();
+            return base.ValidateToken(token);
         }
     }
 }
