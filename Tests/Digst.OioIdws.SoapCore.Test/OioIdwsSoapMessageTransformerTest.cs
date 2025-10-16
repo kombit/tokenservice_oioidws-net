@@ -51,7 +51,7 @@ public class OioIdwsSoapMessageTransformerTest
         xmlDocument.LoadXml(xDocument.ToString());
         var signatureNodeList = xmlDocument.GetElementsByTagName("Signature", Namespaces.SignatureNamespace);
         Assert.IsNotNull(signatureNodeList);
-        Assert.AreEqual(2, signatureNodeList.Count); // One is in Header's Assertion
+        Assert.HasCount(2, signatureNodeList); // One is in Header's Assertion
     }
 
     [TestMethod]
@@ -84,7 +84,7 @@ public class OioIdwsSoapMessageTransformerTest
         xmlDocument.LoadXml(xDocument.ToString());
         var signatureNodeList = xmlDocument.GetElementsByTagName("Signature", Namespaces.SignatureNamespace);
         Assert.IsNotNull(signatureNodeList);
-        Assert.AreEqual(0, signatureNodeList.Count); // Signature is removed to skip the default validation
+        Assert.IsEmpty(signatureNodeList); // Signature is removed to skip the default validation
     }
 
     private static XmlNamespaceManager CreateXmlNamespaceManager()

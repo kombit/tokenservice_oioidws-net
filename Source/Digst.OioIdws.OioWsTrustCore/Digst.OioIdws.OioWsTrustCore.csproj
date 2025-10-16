@@ -22,7 +22,7 @@
   <ItemGroup>
 	<PackageReference Include="System.ServiceModel.Primitives" Version="8.1.2" />
 	<PackageReference Include="System.ServiceModel.Federation" Version="8.1.2" />
-	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0-rc.1.25451.107" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0-rc.2.25502.107" />
   </ItemGroup>
 
   <ItemGroup>

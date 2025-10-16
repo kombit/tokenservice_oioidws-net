@@ -424,7 +424,7 @@ namespace Digst.OioIdws.CommonCore.Test
             Assert.IsNotNull(result);
             Assert.AreEqual("root", result.LocalName);
             Assert.AreEqual("urn:default", result.NamespaceURI);
-            Assert.AreEqual(2, result.ChildNodes.Count);
+            Assert.HasCount(2, result.ChildNodes);
         }
     }
 }

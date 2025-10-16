@@ -39,7 +39,7 @@ namespace Digst.OioIdws.SoapCore.Test
             xmlDocument.LoadXml(xDocument.ToString());
             var signatureNodeList = xmlDocument.GetElementsByTagName("Signature", Namespaces.SignatureNamespace);
             Assert.IsNotNull(signatureNodeList);
-            Assert.AreEqual(1, signatureNodeList.Count); // Only one is in Header's Assertion
+            Assert.HasCount(1, signatureNodeList); // Only one is in Header's Assertion
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace Digst.OioIdws.SoapCore.Test
             xmlDocument.LoadXml(xDocument.ToString());
             var signatureNodeList = xmlDocument.GetElementsByTagName("Signature", Namespaces.SignatureNamespace);
             Assert.IsNotNull(signatureNodeList);
-            Assert.AreEqual(2, signatureNodeList.Count); // One is in Header's Assertion, modifing the response is done in the EndRequest
+            Assert.HasCount(2, signatureNodeList); // One is in Header's Assertion, modifing the response is done in the EndRequest
         }
 
         [TestMethod]
