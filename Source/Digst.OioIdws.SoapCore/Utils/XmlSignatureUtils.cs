@@ -45,7 +45,7 @@ namespace Digst.OioIdws.SoapCore.Utils
             var nsManager = new XmlNamespaceManager(doc.NameTable);
             nsManager.AddNamespace(sPrefix, sNamespace);
             nsManager.AddNamespace("o", Namespaces.Wsse10Namespace);
-            var securityNode = doc.SelectSingleNode(securityNodePath, nsManager);
+            XmlNode securityNode = doc.SelectSingleNode(securityNodePath, nsManager)!; // The security node must be present
             var securityTokenReferenceNode = doc.SelectSingleNode(securityTokenReferenceNodePath, nsManager);
             securityNode.InsertAfter(doc.ImportNode(signedXml.GetXml(), true), securityTokenReferenceNode);
 
@@ -58,9 +58,9 @@ namespace Digst.OioIdws.SoapCore.Utils
         {
             // Apply private key, canonicalization method and signature method
             var signedXml = new SignedXmlWithIdResolvement(doc);
-            signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
+            signedXml.SignedInfo!.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;    // signedXml is created with a non-null SignedInfo
             signedXml.SignedInfo.SignatureMethod = Sha256SignatureAlgorithms.XmlDsigMoreRsaSha256Url;
-            signedXml.SigningKey = cert.PrivateKey;
+            signedXml.SigningKey = cert.GetRSAPrivateKey();
 
             // Make a reference for each element that must be signed.
             foreach (var id in ids.Where(nodeId => nodeId != IdValue.SecurityTokenReferenceElementIdValue))
@@ -104,7 +104,7 @@ namespace Digst.OioIdws.SoapCore.Utils
             }
 
             // Signature must be placed at the correct position
-            var signatureElements = nodeList.OfType<XmlElement>().Where(x => x.ParentNode.LocalName == "Security" &&
+            var signatureElements = nodeList.OfType<XmlElement>().Where(x => x.ParentNode?.LocalName == "Security" &&
                 x.ParentNode.ParentNode != null && x.ParentNode.ParentNode.LocalName == "Header").ToArray();
             XmlElement signatureElement = signatureElements[signaturePosition];
             signedXml.LoadXml(signatureElement);

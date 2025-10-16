@@ -267,7 +267,15 @@ namespace Digst.OioIdws.CommonCore
 
             public PeerOrChainTrustValidator(X509ChainPolicy chainPolicy)
             {
-                _chain = CreateChainTrustValidator(chainPolicy);
+                // IMPORTANT NOTE: When checking source of the CreateChainTrustValidator method, it says:
+                // "implies _useMachineContext = false
+                // ctor for X509Chain(_useMachineContext, _chainPolicyOID) not present in CoreCLR"
+                // 
+                // Thus, there is no need for passing useMachineContext to this constructor yet
+
+                // use false as default for useMachineContext as the quoted comment above
+                // the parameter is ignored anyway
+                _chain = CreateChainTrustValidator(false, chainPolicy);
                 _peer = (PeerTrustValidator)PeerTrust;
             }
 

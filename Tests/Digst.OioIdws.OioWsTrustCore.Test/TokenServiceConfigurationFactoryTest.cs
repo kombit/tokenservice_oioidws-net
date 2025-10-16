@@ -1,6 +1,5 @@
 ﻿using Digst.OioIdws.WscCore.OioWsTrust;
 using Digst.OioIdws.Common.TestUtils;
-using System.Runtime.Caching;
 using System.ServiceModel;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -88,6 +87,6 @@ public class TokenServiceConfigurationFactoryTest
     public void CreateConfigurationWithNullWscConfigurationWillThrowException()
     {
         // No configuration from config file
-        Assert.ThrowsException<ArgumentNullException>(() => { TokenServiceConfigurationFactory.CreateConfiguration(); });
+        Assert.ThrowsExactly<ArgumentNullException>(() => { TokenServiceConfigurationFactory.CreateConfiguration(); });
     }
 }

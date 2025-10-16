@@ -9,6 +9,7 @@ using System.ServiceModel;
 namespace Digst.OioIdws.OioWsTrustCore.Test
 {
     [TestClass]
+    [TestCategory(Constants.UnitTest)]
     public class StsTokenServiceConfigurationTest
     {
         [TestMethod]
@@ -29,6 +30,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             Assert.AreSame(wspConfiguration, configuration.WspConfiguration);
             Assert.AreSame(clientCertificate, configuration.ClientCertificate);
             Assert.AreEqual(expectedCacheClockSkew, configuration.CacheClockSkew);
+            Assert.IsNotNull(configuration.ReplayAttackCache);
         }
 
         [TestMethod]
@@ -38,10 +40,8 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap11, Certificates.TestCertificate);
             var clientCertificate = Certificates.TestCertificate;
 
-            StsConfiguration? stsConfiguration = null;
-
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new StsTokenServiceConfiguration(stsConfiguration!, wspConfiguration, clientCertificate));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsTokenServiceConfiguration(null!, wspConfiguration, clientCertificate));
         }
 
         [TestMethod]
@@ -50,10 +50,9 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             // Arrange
             var stsConfiguration = new StsConfiguration("testendpoint", "teststsid", "12345678", Certificates.StsCertificate);
             var clientCertificate = Certificates.TestCertificate;
-            WspConfiguration? wspConfiguration = null;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration!, clientCertificate));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsTokenServiceConfiguration(stsConfiguration, null!, clientCertificate));
         }
 
         [TestMethod]
@@ -62,10 +61,59 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             // Arrange
             var stsConfiguration = new StsConfiguration("testendpoint", "teststsid", "12345678", Certificates.StsCertificate);
             var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap11, Certificates.TestCertificate);
-            X509Certificate2? clientCertificate = null;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, clientCertificate!));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, null!));
+        }
+
+        [TestMethod]
+        public void StsTokenServiceConfiguration_DefaultValues_AreSetCorrectly()
+        {
+            // Arrange
+            var stsConfiguration = new StsConfiguration("testendpoint", "teststsid", "12345678", Certificates.StsCertificate);
+            var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap11, Certificates.TestCertificate);
+            var clientCertificate = Certificates.TestCertificate;
+
+            // Act
+            var configuration = new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, clientCertificate);
+
+            // Assert
+            Assert.IsNull(configuration.MaxReceivedMessageSize);
+            Assert.AreEqual(TimeSpan.FromSeconds(60), configuration.CacheClockSkew);
+            Assert.IsInstanceOfType<MemoryDistributedCache>(configuration.ReplayAttackCache);
+        }
+
+        [TestMethod]
+        public void StsTokenServiceConfiguration_SetMaxReceivedMessageSize_UpdatesProperty()
+        {
+            // Arrange
+            var stsConfiguration = new StsConfiguration("testendpoint", "teststsid", "12345678", Certificates.StsCertificate);
+            var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap11, Certificates.TestCertificate);
+            var clientCertificate = Certificates.TestCertificate;
+            var configuration = new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, clientCertificate);
+
+            // Act
+            configuration.MaxReceivedMessageSize = 1024;
+
+            // Assert
+            Assert.AreEqual(1024, configuration.MaxReceivedMessageSize);
+        }
+
+        [TestMethod]
+        public void StsTokenServiceConfiguration_SetReplayAttackCache_UpdatesProperty()
+        {
+            // Arrange
+            var stsConfiguration = new StsConfiguration("testendpoint", "teststsid", "12345678", Certificates.StsCertificate);
+            var wspConfiguration = new WspConfiguration("testwspendpoint", "testwspendpointid", EnvelopeVersion.Soap11, Certificates.TestCertificate);
+            var clientCertificate = Certificates.TestCertificate;
+            var configuration = new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, clientCertificate);
+            var customCache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()));
+
+            // Act
+            configuration.ReplayAttackCache = customCache;
+
+            // Assert
+            Assert.AreSame(customCache, configuration.ReplayAttackCache);
         }
 
         [TestMethod]
@@ -133,7 +181,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
         public void StsTokenServiceConfiguration_CopyConstructor_ThrowsArgumentNullExceptionWhenOtherIsNull()
         {
             // Arrange, Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new StsTokenServiceConfiguration(null!));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsTokenServiceConfiguration(null!));
         }
 
         [TestMethod]
@@ -167,7 +215,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
                 clientCertificate);
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => configuration.ReplayAttackCache = null!);
+            Assert.ThrowsExactly<ArgumentNullException>(() => configuration.ReplayAttackCache = null!);
         }
 
         [TestMethod]

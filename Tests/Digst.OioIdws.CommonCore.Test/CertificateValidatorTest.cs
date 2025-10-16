@@ -1,9 +1,5 @@
-﻿using Digst.OioIdws.CommonCore;
-using Digst.OioIdws.Common.TestUtils;
+﻿using Digst.OioIdws.Common.TestUtils;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digst.OioIdws.CommonCore.Test
 {
@@ -20,11 +16,11 @@ namespace Digst.OioIdws.CommonCore.Test
             var sut = X509CertificateValidatorFactory.ChainTrust;
 
             // Act
-            var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
+            var exception = Assert.ThrowsExactly<Microsoft.IdentityModel.Tokens.SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-90892939, O=Testorganisation nr. 90892939, SERIALNUMBER=UI:DK-O:G:f1eed326-bca5-4133-88a6-a639b66aaa54, CN=hhp-test-ch-demo-17may; 11DD0FC0BC0B0CEE24DCB02AFE3D985124AB14B4 failed.");
-            StringAssert.Contains(exception.Message, "A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.");
+            Assert.Contains("Validating certificate C=DK, OID.2.5.4.97=NTRDK-90892939, O=Testorganisation nr. 90892939, SERIALNUMBER=UI:DK-O:G:f1eed326-bca5-4133-88a6-a639b66aaa54, CN=hhp-test-ch-demo-17may; 11DD0FC0BC0B0CEE24DCB02AFE3D985124AB14B4 failed.", exception.Message);
+            Assert.Contains("A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.", exception.Message);
         }
 
         [TestMethod]
@@ -39,11 +35,11 @@ namespace Digst.OioIdws.CommonCore.Test
             });
 
             // Act
-            var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
+            var exception = Assert.ThrowsExactly<Microsoft.IdentityModel.Tokens.SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-90892939, O=Testorganisation nr. 90892939, SERIALNUMBER=UI:DK-O:G:f1eed326-bca5-4133-88a6-a639b66aaa54, CN=hhp-test-ch-demo-17may; 11DD0FC0BC0B0CEE24DCB02AFE3D985124AB14B4 failed.");
-            StringAssert.Contains(exception.Message, "A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.");
+            Assert.Contains("Validating certificate C=DK, OID.2.5.4.97=NTRDK-90892939, O=Testorganisation nr. 90892939, SERIALNUMBER=UI:DK-O:G:f1eed326-bca5-4133-88a6-a639b66aaa54, CN=hhp-test-ch-demo-17may; 11DD0FC0BC0B0CEE24DCB02AFE3D985124AB14B4 failed.", exception.Message);
+            Assert.Contains("A required certificate is not within its validity period when verifying against the current system clock or the timestamp in the signed file.", exception.Message);
         }
 
         [TestMethod]
@@ -82,11 +78,11 @@ namespace Digst.OioIdws.CommonCore.Test
             var sut = X509CertificateValidatorFactory.ChainTrust;
 
             // Act
-            var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
+            var exception = Assert.ThrowsExactly<Microsoft.IdentityModel.Tokens.SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-92273980, O=Testorganisation nr. 92273980, SERIALNUMBER=UI:DK-O:G:e77d87a5-9f75-4aee-b139-e15eafed0894, CN=usercert-02-revoked; 64305D1145DC3572CD88B54084C06DE0E1A638D3 failed.");
-            StringAssert.Contains(exception.Message, "The certificate is revoked.");
+            Assert.Contains("Validating certificate C=DK, OID.2.5.4.97=NTRDK-92273980, O=Testorganisation nr. 92273980, SERIALNUMBER=UI:DK-O:G:e77d87a5-9f75-4aee-b139-e15eafed0894, CN=usercert-02-revoked; 64305D1145DC3572CD88B54084C06DE0E1A638D3 failed.", exception.Message);
+            Assert.Contains("The certificate is revoked.", exception.Message);
         }
 
         [TestMethod]
@@ -169,11 +165,11 @@ namespace Digst.OioIdws.CommonCore.Test
             });
 
             // Act
-            var exception = Assert.ThrowsException<SecurityTokenValidationException>(() => sut.Validate(certificate));
+            var exception = Assert.ThrowsExactly<Microsoft.IdentityModel.Tokens.SecurityTokenValidationException>(() => sut.Validate(certificate));
 
             // Assert
-            StringAssert.Contains(exception.Message, "Validating certificate C=DK, OID.2.5.4.97=NTRDK-92273980, O=Testorganisation nr. 92273980, SERIALNUMBER=UI:DK-O:G:e77d87a5-9f75-4aee-b139-e15eafed0894, CN=usercert-02-revoked; 64305D1145DC3572CD88B54084C06DE0E1A638D3 failed.");
-            StringAssert.Contains(exception.Message, "The certificate is revoked.");
+            Assert.Contains("Validating certificate C=DK, OID.2.5.4.97=NTRDK-92273980, O=Testorganisation nr. 92273980, SERIALNUMBER=UI:DK-O:G:e77d87a5-9f75-4aee-b139-e15eafed0894, CN=usercert-02-revoked; 64305D1145DC3572CD88B54084C06DE0E1A638D3 failed.", exception.Message);
+            Assert.Contains("The certificate is revoked.", exception.Message);
         }
 
         [TestMethod]
@@ -201,7 +197,7 @@ namespace Digst.OioIdws.CommonCore.Test
             var validator = X509CertificateValidatorFactory.None;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => validator.Validate(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => validator.Validate(null));
         }
 
         [TestMethod]
@@ -211,7 +207,7 @@ namespace Digst.OioIdws.CommonCore.Test
             var validator = X509CertificateValidatorFactory.PeerTrust;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => validator.Validate(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => validator.Validate(null));
         }
 
         [TestMethod]
@@ -221,7 +217,7 @@ namespace Digst.OioIdws.CommonCore.Test
             var validator = X509CertificateValidatorFactory.ChainTrust;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => validator.Validate(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => validator.Validate(null));
         }
 
         [TestMethod]
@@ -231,7 +227,7 @@ namespace Digst.OioIdws.CommonCore.Test
             var validator = X509CertificateValidatorFactory.PeerOrChainTrust;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => validator.Validate(null));
+            Assert.ThrowsExactly<ArgumentNullException>(() => validator.Validate(null));
         }
     }
 }

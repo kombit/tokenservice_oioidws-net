@@ -41,7 +41,7 @@ namespace Digst.OioIdws.WscExampleCoreNuGet
             try
             {
                 // Invoke a WSP operation which requires signature but not encryption.
-                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").Result);
+                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").GetAwaiter().GetResult());
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace Digst.OioIdws.WscExampleCoreNuGet
             //Checking that SOAP faults can be read.
             try
             {
-                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").Result;
+                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").GetAwaiter().GetResult();
                 Console.WriteLine(error);
             }
             catch (Exception e)

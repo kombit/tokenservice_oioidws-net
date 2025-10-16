@@ -41,15 +41,7 @@ namespace Digst.OioIdws.OioWsTrustCore
                 // This is when we need to call an STS to get a token
                 // alternatively, use the built-in WSTrustChannelSecurityTokenProvider to avoid reflection
                 // and modify Xml message at OioWsTrustChannel.Request using OioWsTrustMessageTransformer
-                var provider = new OioWSTrustChannelSecurityTokenProvider(tokenRequirement);
-#pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
-                var bindingAttr = BindingFlags.NonPublic | BindingFlags.Instance;
-#pragma warning restore S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
-                var propertyInfo = provider.GetType().GetProperty("ClientCredentials", bindingAttr);
-                propertyInfo.SetValue(provider, _wsTrustChannelClientCredentials.ClientCredentials);
-
-                provider.CustomClientCredentials = _wsTrustChannelClientCredentials.ClientCredentials;
-
+                var provider = new OioWSTrustChannelSecurityTokenProvider(tokenRequirement, _wsTrustChannelClientCredentials.ClientCredentials);
                 return provider;
             }
             // If the original ChannelFactory had a ClientCredentials instance, defer to that

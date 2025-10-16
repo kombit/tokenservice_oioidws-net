@@ -31,7 +31,7 @@ public class OioIdwsSoapBindingElementTest
         // Act
 
         // Assert
-        Assert.ThrowsException<InvalidOperationException>(() => sut.BuildChannelFactory<IRequestChannel>(bindingContext));
+        Assert.ThrowsExactly<InvalidOperationException>(() => sut.BuildChannelFactory<IRequestChannel>(bindingContext));
     }
 
 

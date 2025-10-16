@@ -60,7 +60,7 @@ namespace Digst.OioIdws.IntegrationTests
                 }
                 catch (AggregateException ex)
                 {
-                    StringAssert.Contains(ex.Message, "The maximum message size quota for incoming messages (128) has been exceeded. To increase the quota, use the MaxReceivedMessageSize property on the appropriate binding element.");
+                    Assert.Contains("The maximum message size quota for incoming messages (128) has been exceeded. To increase the quota, use the MaxReceivedMessageSize property on the appropriate binding element.", ex.Message);
                 }
             });
         }
@@ -165,7 +165,7 @@ namespace Digst.OioIdws.IntegrationTests
             ProxyServerHelper.ExecuteWithBeforeResponse(() =>
             {
                 var channel = CreateChannel<IHelloWorld>();
-                var exception = Assert.ThrowsException<AggregateException>(() => TestChannelMethod(channel.HelloSignAsync, HelloSignedFormat));
+                var exception = Assert.ThrowsExactly<AggregateException>(() => TestChannelMethod(channel.HelloSignAsync, HelloSignedFormat));
                 var securityException = exception.InnerException as MessageSecurityException;
                 Assert.AreEqual("SOAP signature received from WSP does not validate!", securityException?.Message);
             }, OnResignResponse);

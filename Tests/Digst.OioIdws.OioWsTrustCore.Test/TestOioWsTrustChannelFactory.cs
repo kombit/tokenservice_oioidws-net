@@ -177,7 +177,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
         public Message EndRequest(IAsyncResult result)
         {
             var test = result as Task<Message>;
-            return test!.Result;
+            return test!.GetAwaiter().GetResult();
         }
 
         public T GetProperty<T>() where T : class

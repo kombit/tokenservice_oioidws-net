@@ -28,11 +28,11 @@ public class OioIdwsSoapMessageTransformerTest
 
         var stsTokenServiceConfiguration = new StsTokenServiceConfiguration(stsConfiguration, wspConfiguration, clientCert);
 
-        var tokenParams = new FederatedSecurityTokenParameters(new TestSecurityToken(), MessageVersion.CreateVersion(EnvelopeVersion.Soap12, AddressingVersion.WSAddressing10),
+        var tokenParams = new FederatedSecurityTokenParameters(new TestSecurityToken(), MessageVersion.CreateVersion(EnvelopeVersion.Soap12, AddressingVersion.WSAddressingAugust2004),
             stsTokenServiceConfiguration, "https://test.service");
 
         var messageXml = XDocument.Load(@"Data\MessageBeforeTransforming.xml");
-        var message = Message.CreateMessage(MessageVersion.Soap12WSAddressingAugust2004, "Test");
+        var message = Message.CreateMessage(MessageVersion.Soap12, "Test");
         message = messageXml.ToMessage(message);
 
         // Act

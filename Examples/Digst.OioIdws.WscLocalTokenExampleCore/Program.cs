@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens.Saml2;
 using ServiceReference;
 using System;
 using System.IdentityModel.Tokens;
-using System.Threading;
 using System.Xml;
 
 namespace Digst.OioIdws.WscLocalTokenExampleCore
@@ -58,7 +57,7 @@ namespace Digst.OioIdws.WscLocalTokenExampleCore
             try
             {
                 // Invoke a WSP operation which requires signature but not encryption.
-                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").Result);
+                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").GetAwaiter().GetResult());
             }
             catch (Exception e)
             {
@@ -76,7 +75,7 @@ namespace Digst.OioIdws.WscLocalTokenExampleCore
             // SOAP faults are unencrypted by WSP only if special care is taken.
             try
             {
-                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").Result;
+                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").GetAwaiter().GetResult();
                 Console.WriteLine(error);
             }
             catch (Exception e)

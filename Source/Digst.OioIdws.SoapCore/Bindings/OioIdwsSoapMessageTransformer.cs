@@ -119,8 +119,8 @@ namespace Digst.OioIdws.SoapCore.Bindings
             // Remove Diagnostics tracing element. It is only present when WCF Diagnostics are enabled. So removing the element is just to make life easier for developers.
             xDocument.RemoveIfExist("/s:Envelope/s:Header/vcf:ActivityId", namespaceManager);
 
-            var assertionElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security", namespaceManager).Elements().Skip(1).First();
-            string assertionId = assertionElement.Attribute("ID").Value;
+            var assertionElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security", namespaceManager)!.Elements().Skip(1).First();
+            string assertionId = assertionElement.Attribute("ID")!.Value;
             var newKeyIdentifierElement = new XElement(XName.Get("KeyIdentifier", Namespaces.Wsse10Namespace));
             newKeyIdentifierElement.Add(new XAttribute("ValueType", Common.SamlValueType));
             newKeyIdentifierElement.Value = assertionId;
@@ -131,7 +131,7 @@ namespace Digst.OioIdws.SoapCore.Bindings
 
             assertionElement.AddAfterSelf(securityTokenReferenceElement);
 
-            var messageIdElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:MessageID", namespaceManager);
+            XElement messageIdElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:MessageID", namespaceManager)!;
 
             var replyToElement = new XElement(XName.Get("ReplyTo", Namespaces.WsaNamespace));
             var replyToAddressElement = new XElement(XName.Get("Address", Namespaces.WsaNamespace));
@@ -158,13 +158,13 @@ namespace Digst.OioIdws.SoapCore.Bindings
         {
             // Add id's to elements that needs to be signed.
             var namespaceManager = CreateXmlNamespaceManager();
-            var actionElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:Action", namespaceManager);
-            var msgElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:MessageID", namespaceManager);
-            var toElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:To", namespaceManager);
-            var replyToElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:ReplyTo", namespaceManager);
-            var timeStampElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security/u:Timestamp", namespaceManager);
-            var securityTokenReferenceElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security/o:SecurityTokenReference", namespaceManager);
-            var bodyElement = xDocument.XPathSelectElement("/s:Envelope/s:Body", namespaceManager);
+            XElement actionElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:Action", namespaceManager)!;
+            XElement msgElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:MessageID", namespaceManager)!;
+            XElement toElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:To", namespaceManager)!;
+            XElement replyToElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/a:ReplyTo", namespaceManager)!;
+            XElement timeStampElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security/u:Timestamp", namespaceManager)!;
+            XElement securityTokenReferenceElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security/o:SecurityTokenReference", namespaceManager)!;
+            XElement bodyElement = xDocument.XPathSelectElement("/s:Envelope/s:Body", namespaceManager)!;
 
             var idXName = XName.Get("Id", Namespaces.WsuNamespace);
             actionElement.Add(new XAttribute(idXName, IdValue.ActionIdValue));
@@ -196,7 +196,7 @@ namespace Digst.OioIdws.SoapCore.Bindings
         private XDocument RemoveExistingSignatureAndSign(XDocument xDocument, GenericXmlSecurityToken referenceSecurityToken, X509Certificate2 clientCertificate, XmlNamespaceManager namespaceManager, XElement securityTokenReferenceElement, List<string> idOfElementsThatMustBeSigned)
         {
             // Remove existing Signature
-            var securityElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security", namespaceManager);
+            XElement securityElement = xDocument.XPathSelectElement("/s:Envelope/s:Header/o:Security", namespaceManager)!;  // The security element must be present
             securityElement.RemoveChildElement("Signature", Namespaces.SignatureNamespace);
 
             xDocument = XmlSignatureUtils.SignDocument(xDocument, referenceSecurityToken, idOfElementsThatMustBeSigned, clientCertificate, securityTokenReferenceElement, _federatedSecurityTokenParameters.MessageVersion.Envelope);
@@ -205,7 +205,7 @@ namespace Digst.OioIdws.SoapCore.Bindings
 
         private static void HandleLibertyFrameworkHeader(XDocument xDocument, XmlNamespaceManager namespaceManager, XName idXName, List<string> idOfElementsThatMustBeSigned)
         {
-            var libertyHeaderElement = xDocument.XPathSelectElement("/s:Envelope/s:Header", namespaceManager).Elements().FirstOrDefault(e => e.Name.LocalName == "Framework");
+            XElement? libertyHeaderElement = xDocument.XPathSelectElement("/s:Envelope/s:Header", namespaceManager)!.Elements().FirstOrDefault(e => e.Name.LocalName == "Framework");
             if (libertyHeaderElement != null)
             {
                 libertyHeaderElement.Add(new XAttribute(idXName, IdValue.LibertyFrameworkIdValue));

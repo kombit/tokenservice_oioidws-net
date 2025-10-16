@@ -48,7 +48,7 @@ namespace Digst.OioIdws.SoapCore.Test
             // Arrange
             var sut = CreateSut12();
             var messageXml = XDocument.Load(@"Data\MessageBeforeTransforming.xml");
-            var message = Message.CreateMessage(MessageVersion.Soap12WSAddressingAugust2004, "Test");
+            var message = Message.CreateMessage(MessageVersion.Soap12, "Test");
             message = messageXml.ToMessage(message);
 
             // Act
@@ -76,7 +76,7 @@ namespace Digst.OioIdws.SoapCore.Test
             var reply = Message.CreateMessage(MessageVersion.Soap12WSAddressingAugust2004, "Test");
             reply = messageXml.ToMessage(reply);
 
-            Assert.ThrowsException<MessageSecurityException>(() => sut.EndRequest(Task<Message>.FromResult(reply)), "RelatesTo header block is required and its value MUST be set to the value of the < wsa:MessageID > header block of the prior-received message.");
+            Assert.ThrowsExactly<MessageSecurityException>(() => sut.EndRequest(Task<Message>.FromResult(reply)), "RelatesTo header block is required and its value MUST be set to the value of the < wsa:MessageID > header block of the prior-received message.");
         }
 
         [TestMethod]
@@ -95,7 +95,7 @@ namespace Digst.OioIdws.SoapCore.Test
             };
             var asyncResult = new Task<Message>(func, new UniqueId("uuid:0cbeecb3-8fe4-40c2-837d-db77ffce3801"));
             asyncResult.Start();
-            Assert.ThrowsException<MessageSecurityException>(() => sut.EndRequest(asyncResult), "The <wsa:MessageID> header block MUST be included in the SOAP header.");
+            Assert.ThrowsExactly<MessageSecurityException>(() => sut.EndRequest(asyncResult), "The <wsa:MessageID> header block MUST be included in the SOAP header.");
         }
 
         private static OioIdwsSoapChannel CreateSut()

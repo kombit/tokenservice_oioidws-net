@@ -2,10 +2,8 @@
 using Digst.OioIdws.OioWsTrustCore;
 using Digst.OioIdws.SoapCore;
 using Digst.OioIdws.WscCore.OioWsTrust;
-using log4net.Config;
 using ServiceReference;
 using System;
-using System.Collections.Specialized;
 using System.IdentityModel.Tokens;
 
 namespace Digst.OioIdws.WscExampleCoreWithCode
@@ -73,7 +71,7 @@ namespace Digst.OioIdws.WscExampleCoreWithCode
             try
             {
                 // Invoke a WSP operation which requires signature but not encryption.
-                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").Result);
+                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").GetAwaiter().GetResult());
             }
             catch (Exception e)
             {
@@ -90,7 +88,7 @@ namespace Digst.OioIdws.WscExampleCoreWithCode
             //Checking that SOAP faults can be read.
             try
             {
-                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").Result;
+                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").GetAwaiter().GetResult();
                 Console.WriteLine(error);
             }
             catch (Exception e)

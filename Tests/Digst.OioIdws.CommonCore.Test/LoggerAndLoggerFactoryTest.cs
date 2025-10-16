@@ -1,5 +1,4 @@
 using Digst.OioIdws.CommonCore.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 
 namespace Digst.OioIdws.CommonCore.Test

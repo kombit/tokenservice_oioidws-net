@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.Xml;
+﻿using System;
+using System.Security.Cryptography.Xml;
 using System.Xml;
 using Digst.OioIdws.CommonCore.Constants;
 
@@ -16,8 +17,11 @@ namespace Digst.OioIdws.CommonCore
         /// <summary>
         /// Id attributes are prefixed with <see cref="Namespaces.WsuPrefix"/> and can not be resolved by the standard implementation. This implementation handles this.
         /// </summary>
-        public override XmlElement GetIdElement(XmlDocument document, string idValue)
+        public override XmlElement? GetIdElement(XmlDocument? document, string idValue)
         {
+            if (document == null)
+                throw new ArgumentNullException(nameof(document));
+
             // Check to see if it's a standard ID reference
             var idElem = base.GetIdElement(document, idValue);
 

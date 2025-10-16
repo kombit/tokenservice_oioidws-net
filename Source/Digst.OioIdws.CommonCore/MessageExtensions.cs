@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection.Metadata;
 using System.ServiceModel.Channels;
 using System.Xml;
 using System.Xml.Linq;
@@ -19,6 +20,9 @@ namespace Digst.OioIdws.CommonCore
         /// <param name="request"></param>
         public static XDocument ToXml(this Message request)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             XDocument xDocument;
             using (var memoryStream = new MemoryStream())
             {
@@ -39,6 +43,9 @@ namespace Digst.OioIdws.CommonCore
         /// <param name="request"></param>
         public static XmlDocument ToXmlDocument(this Message request)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             XmlDocument doc;
             using (var memoryStream = new MemoryStream())
             {
@@ -57,6 +64,9 @@ namespace Digst.OioIdws.CommonCore
 
         public static XmlDocument ToXmlDocument(this XDocument xDocument)
         {
+            if (xDocument == null)
+                throw new ArgumentNullException(nameof(xDocument));
+
             // This conversion is not as effective as using XmlDocument.CreateReader().
             // However, using xDocument.CreateReader() makes the response signature from the STS invalid. The signature created by this class is not affected by using xDocument.CreateReader().
             var xmlDocument = new XmlDocument();
@@ -71,6 +81,9 @@ namespace Digst.OioIdws.CommonCore
         /// <returns></returns>
         public static XDocument ToXDocument(this XmlDocument xmlDocument)
         {
+            if (xmlDocument == null)
+                throw new ArgumentNullException(nameof(xmlDocument));
+
             using (var nodeReader = new XmlNodeReader(xmlDocument))
             {
                 nodeReader.MoveToContent();
@@ -86,9 +99,12 @@ namespace Digst.OioIdws.CommonCore
         /// <returns></returns>
         public static XmlElement ToXmlElement(this XElement xElement)
         {
+            if (xElement == null)
+                throw new ArgumentNullException(nameof(xElement));
+
             var xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(xElement.ToString());
-            return xmlDocument.DocumentElement;
+            return xmlDocument.DocumentElement!;
         }
 
         /// <summary>
@@ -99,6 +115,11 @@ namespace Digst.OioIdws.CommonCore
         /// <param name="request"></param>
         public static Message ToMessage(this XNode xNode, Message request)
         {
+            if (xNode == null)
+                throw new ArgumentNullException(nameof(xNode));
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             return ToMessage(request, xmlWriter => xNode.WriteTo(xmlWriter));
         }
 
@@ -111,6 +132,11 @@ namespace Digst.OioIdws.CommonCore
         /// <returns></returns>
         public static Message ToMessage(this XmlDocument doc, Message request)
         {
+            if (doc == null)
+                throw new ArgumentNullException(nameof(doc));
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             return ToMessage(request, xmlWriter => doc.WriteTo(xmlWriter));
         }
 
@@ -122,6 +148,13 @@ namespace Digst.OioIdws.CommonCore
         /// <param name="namespaceManager"></param>
         public static void RemoveIfExist(this XDocument xDocument, string elementPath, XmlNamespaceManager namespaceManager)
         {
+            if (xDocument == null)
+                throw new ArgumentNullException(nameof(xDocument));
+            if (elementPath == null)
+                throw new ArgumentNullException(nameof(elementPath));
+            if (namespaceManager == null)
+                throw new ArgumentNullException(nameof(namespaceManager));
+
             var element = xDocument.XPathSelectElement(elementPath, namespaceManager);
             if (element != null)
             {
@@ -137,6 +170,13 @@ namespace Digst.OioIdws.CommonCore
         /// <param name="ns">The child element namespace</param>
         public static void RemoveChildElement(this XElement xElement, string childElementName, string ns)
         {
+            if (xElement == null)
+                throw new ArgumentNullException(nameof(xElement));
+            if (childElementName == null)
+                throw new ArgumentNullException(nameof(childElementName));
+            if (ns == null)
+                throw new ArgumentNullException(nameof(ns));
+
             var element = xElement.Element(XName.Get(childElementName, ns));
             if (element != null)
             {

@@ -31,7 +31,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             // Assert
             Assert.IsNotNull(elements);
             Assert.AreEqual(config.SendTimeout, sut.SendTimeout);
-            Assert.AreEqual(3, elements.Count);
+            Assert.HasCount(3, elements);
 
             var httpsTransportBindingElement = elements.OfType<HttpsTransportBindingElement>().Single();
             Assert.IsTrue(httpsTransportBindingElement.ManualAddressing);

@@ -28,7 +28,11 @@ namespace Digst.OioIdws.CommonCore.Logging
                     var t = Type.GetType(config.Logger);
                     if (t != null)
                     {
-                        return (ILogger)Activator.CreateInstance(t);
+                        if (Activator.CreateInstance(t) is ILogger logger)
+                        {
+                            return logger;
+                        }
+                        // else throw exception below
                     }
 
                     throw new NotSupportedException($"The type {config.Logger} is not available for the logging. Please check the type name and assembly");
