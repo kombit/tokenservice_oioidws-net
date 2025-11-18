@@ -17,8 +17,8 @@ Some of the most notable changes in comparison with Digst.OioIdws are:
 
 You can use the following steps to implement .NET Core WSC applications using Digst.OioIdws.Core:
 
-1. Create a new .NET 6.0 project.
-2. Add references to the Digst.OioIdws.WscCore package as well as other WCF packages
+1. Create a new .NET 10.0 project.
+2. Add references to the https://www.nuget.org/packages/KMD.Digst.OioIdws.WscCore package as well as other WCF packages
 
    ![WscCore package](images/nuget.png)
 
@@ -45,7 +45,7 @@ var channelWithIssuedToken = FederatedChannelFactoryExtensions.CreateChannelWith
 try
 {
     // Invoke a WSP operation which requires signature but not encryption.
-    Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").Result);
+    Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").GetAwaiter().GetResult());
 }
 catch (Exception e)
 {

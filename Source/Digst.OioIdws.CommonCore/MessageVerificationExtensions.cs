@@ -47,8 +47,8 @@ namespace Digst.OioIdws.CommonCore
             XmlNamespaceManager namespaceManager = CreateNamespaceManager(envelopeVersion);
 
             var signedInfo = XElement.Parse(signatureElement.OuterXml).Elements().First(x => x.Name.LocalName == "SignedInfo");
-            var refUries = signedInfo.Elements().Where(x => x.Name.LocalName == "Reference")
-                .Select(x => x.Attribute("URI").Value).ToList();
+            List<string> refUries = signedInfo.Elements().Where(x => x.Name.LocalName == "Reference")
+                .Select(x => x.Attribute("URI")?.Value).Where(uri => uri != null).ToList()!;
 
             // Ensure that the Body (at correct position - not wrapped) is signed
             VerifyRequiredElement(xDocument, refUries, "/s:Envelope/s:Body", namespaceManager, "Body '{0}' is required and must be signed.");

@@ -1,8 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Security.Cryptography.X509Certificates;
-using Digst.OioIdws.Common.TestUtils;
+﻿using Digst.OioIdws.Common.TestUtils;
 using System.ServiceModel;
-using System.Net;
 
 namespace Digst.OioIdws.CommonCore.Test
 {
@@ -37,8 +34,9 @@ namespace Digst.OioIdws.CommonCore.Test
             EnvelopeVersion envelopeVersion = EnvelopeVersion.Soap11;
             X509Certificate2 serviceCertificate = Certificates.TestCertificate;
 
-            // Act
             var other = new WspConfiguration(wspEndpoint, wspEndpointId, envelopeVersion, serviceCertificate);
+
+            // Act
             var sut = new WspConfiguration(other);
 
             // Assert
@@ -48,23 +46,19 @@ namespace Digst.OioIdws.CommonCore.Test
             Assert.AreSame(other.ServiceCertificate, sut.ServiceCertificate);
         }
 
-        /// <summary>
-        /// Invalid input parameter cases
-        /// Test to ensure that an StsConfiguration is always in a valid state
-        /// </summary>
         [TestMethod]
-        [DataRow("", "https://wspEndpointId")]
-        [DataRow("https://stsEndpointAddress", "")]
-        public void Constructor_ThrowWhenInputParameterIsEmpty(string wspEndpoint, string wspEndpointId)
+        [DataRow("", "https://wspEndpointId", DisplayName = "Empty endpoint address")]
+        [DataRow("https://wspEndpointAddress", "", DisplayName = "Empty endpoint ID")]
+        [DataRow(null, "https://wspEndpointId", DisplayName = "Null endpoint address")]
+        [DataRow("https://wspEndpointAddress", null, DisplayName = "Null endpoint ID")]
+        public void Constructor_ThrowWhenInputParameterIsNullOrEmpty(string? wspEndpoint, string? wspEndpointId)
         {
             // Arrange
             EnvelopeVersion envelopeVersion = EnvelopeVersion.Soap11;
             X509Certificate2 serviceCertificate = Certificates.TestCertificate;
 
-            // Act
-            Assert.ThrowsException<ArgumentNullException>(() => new WspConfiguration(wspEndpoint, wspEndpointId, envelopeVersion, serviceCertificate));
-
-            // Assert
+            // Act & Assert
+            Assert.ThrowsExactly<ArgumentNullException>(() => new WspConfiguration(wspEndpoint!, wspEndpointId!, envelopeVersion, serviceCertificate));
         }
 
         [TestMethod]
@@ -74,12 +68,9 @@ namespace Digst.OioIdws.CommonCore.Test
             string wspEndpoint = "https://wspEndpoint";
             string wspEndpointId = "https://wspEndpointId";
             EnvelopeVersion envelopeVersion = EnvelopeVersion.Soap11;
-            X509Certificate2? serviceCertificate = null;
 
-            // Act
-            Assert.ThrowsException<ArgumentNullException>(() => new WspConfiguration(wspEndpoint, wspEndpointId, envelopeVersion, serviceCertificate));
-
-            // Assert
+            // Act & Assert
+            Assert.ThrowsExactly<ArgumentNullException>(() => new WspConfiguration(wspEndpoint, wspEndpointId, envelopeVersion, null!));
         }
 
         [TestMethod]
@@ -88,23 +79,33 @@ namespace Digst.OioIdws.CommonCore.Test
             // Arrange
             string wspEndpoint = "https://wspEndpoint";
             string wspEndpointId = "https://wspEndpointId";
-            EnvelopeVersion? envelopeVersion = null;
             X509Certificate2 serviceCertificate = Certificates.TestCertificate;
 
-            // Act
-            Assert.ThrowsException<ArgumentNullException>(() => new WspConfiguration(wspEndpoint, wspEndpointId, envelopeVersion, serviceCertificate));
-
-            // Assert
+            // Act & Assert
+            Assert.ThrowsExactly<ArgumentNullException>(() => new WspConfiguration(wspEndpoint, wspEndpointId, null!, serviceCertificate));
         }
 
         [TestMethod]
         public void Constructor_CopyConstructor_ThrowsWhenOtherIsNull()
         {
-            // Arrange
-            WspConfiguration? other = null;
-
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new WspConfiguration(other));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new WspConfiguration(null!));
+        }
+
+        [TestMethod]
+        public void Constructor_WithSoap12_SetsVersionCorrectly()
+        {
+            // Arrange
+            string wspEndpoint = "https://wspEndpoint";
+            string wspEndpointId = "https://wspEndpointId";
+            EnvelopeVersion envelopeVersion = EnvelopeVersion.Soap12;
+            X509Certificate2 serviceCertificate = Certificates.TestCertificate;
+
+            // Act
+            var sut = new WspConfiguration(wspEndpoint, wspEndpointId, envelopeVersion, serviceCertificate);
+
+            // Assert
+            Assert.AreEqual(EnvelopeVersion.Soap12, sut.SoapVersion);
         }
     }
 }

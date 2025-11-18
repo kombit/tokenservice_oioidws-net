@@ -22,7 +22,7 @@ namespace Digst.OioIdws.SoapCore.Test
             string wspEndpoint = "https://testwspendpoint";
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
             {
                 new FederatedSecurityTokenParameters(securityToken, messageVersion, stsTokenServiceConfiguration, wspEndpoint);
             }, "The argument 'stsTokenServiceConfiguration' cannot be null.");
@@ -38,7 +38,7 @@ namespace Digst.OioIdws.SoapCore.Test
             string wspEndpoint = "https://testwspendpoint";
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
             {
                 new FederatedSecurityTokenParameters(securityToken, messageVersion, stsTokenServiceConfiguration, wspEndpoint);
             }, "The argument 'securityToken' cannot be null.");
@@ -54,7 +54,7 @@ namespace Digst.OioIdws.SoapCore.Test
             string wspEndpoint = "https://testwspendpoint";
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
             {
                 new FederatedSecurityTokenParameters(securityToken, messageVersion, stsTokenServiceConfiguration, wspEndpoint);
             }, "The argument 'messageVersion' cannot be null.");
@@ -70,7 +70,7 @@ namespace Digst.OioIdws.SoapCore.Test
             string wspEndpoint = null;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            Assert.ThrowsExactly<ArgumentNullException>(() =>
             {
                 new FederatedSecurityTokenParameters(securityToken, messageVersion, stsTokenServiceConfiguration, wspEndpoint);
             }, "The argument 'wspEndpoint' cannot be null or empty.");

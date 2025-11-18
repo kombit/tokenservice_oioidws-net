@@ -19,11 +19,13 @@ namespace Digst.OioIdws.WscCore.OioWsTrust
         {
             using (var store = new X509Store(storeName, storeLocation))
             {
+                // Note that when reading a certificate with a private key,
+                // the private key is only available when the process identity has access to it.
+                // Otherwise, the PrivateKey property will be null.
                 store.Open(OpenFlags.ReadOnly);
 
                 var certificate = store.Certificates.Find(x509FindType, findValue,
                     true).OfType<X509Certificate2>().FirstOrDefault();
-
                 if (certificate == null)
                     throw new InvalidOperationException(
                         string.Format("Certificate with the following configuration was not found: {0}, {1}, {2}, {3}",
@@ -41,13 +43,13 @@ namespace Digst.OioIdws.WscCore.OioWsTrust
         /// <returns></returns>
         public static X509Certificate2 GetCertificate(string filePath, string password)
         {
-            var rawCert = File.ReadAllBytes(filePath);
             if (!string.IsNullOrEmpty(password))
             {
-                return new X509Certificate2(rawCert, password);
+                // If a password is supplied we assume it's a pfx/p12 file
+                return X509CertificateLoader.LoadPkcs12FromFile(filePath, password);
             }
 
-            return new X509Certificate2(rawCert);
+            return X509CertificateLoader.LoadCertificateFromFile(filePath);
         }
 
         /// <summary>

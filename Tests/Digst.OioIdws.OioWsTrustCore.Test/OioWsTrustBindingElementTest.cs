@@ -28,7 +28,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             // Act
 
             // Assert
-            Assert.ThrowsException<InvalidOperationException>(() => sut.BuildChannelFactory<TestRequestChannel>(bindingContext));
+            Assert.ThrowsExactly<InvalidOperationException>(() => sut.BuildChannelFactory<TestRequestChannel>(bindingContext));
         }
 
 

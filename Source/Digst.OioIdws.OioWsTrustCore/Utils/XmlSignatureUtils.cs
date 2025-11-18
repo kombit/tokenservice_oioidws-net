@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
@@ -31,9 +30,9 @@ namespace Digst.OioIdws.OioWsTrustCore.Utils
 
             // Apply private key, canonicalization method and signature method
             var signedXml = new SignedXmlWithIdResolvement(doc);
-            signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
+            signedXml.SignedInfo!.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;    // signedXml is created with a non-null SignedInfo
             signedXml.SignedInfo.SignatureMethod = Sha256SignatureAlgorithms.XmlDsigMoreRsaSha256Url;
-            signedXml.SigningKey = cert.PrivateKey;
+            signedXml.SigningKey = cert.GetRSAPrivateKey();
 
             // Make a reference for each element that must be signed.
             foreach (var id in ids)
@@ -70,7 +69,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Utils
                 throw new MessageSecurityException("Document does not contain a signature to verify.");
             }
 
-            var signatureElement = nodeList.OfType<XmlElement>().FirstOrDefault(x => x.ParentNode.LocalName == "Security" &&
+            var signatureElement = nodeList.OfType<XmlElement>().FirstOrDefault(x => x.ParentNode?.LocalName == "Security" &&
                 x.ParentNode.ParentNode != null && x.ParentNode.ParentNode.LocalName == "Header");
 
             if (signatureElement == null)
@@ -112,7 +111,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Utils
             var nsManager = new XmlNamespaceManager(doc.NameTable);
             nsManager.AddNamespace(Namespaces.S12Prefix, Namespaces.S12Namespace);
             nsManager.AddNamespace(Namespaces.WssePrefix, Namespaces.Wsse10Namespace);
-            var securityNode = doc.SelectSingleNode("/" + Namespaces.S12Prefix + ":Envelope/" + Namespaces.S12Prefix + ":Header/" + Namespaces.WssePrefix + ":Security", nsManager);
+            XmlNode securityNode = doc.SelectSingleNode("/" + Namespaces.S12Prefix + ":Envelope/" + Namespaces.S12Prefix + ":Header/" + Namespaces.WssePrefix + ":Security", nsManager)!;
             var binarySecurityTokenNode = doc.SelectSingleNode("/" + Namespaces.S12Prefix + ":Envelope/" + Namespaces.S12Prefix + ":Header/" + Namespaces.WssePrefix + ":Security/" + Namespaces.WssePrefix + ":BinarySecurityToken", nsManager);
             securityNode.InsertAfter(doc.ImportNode(signedXml.GetXml(), true), binarySecurityTokenNode);
 

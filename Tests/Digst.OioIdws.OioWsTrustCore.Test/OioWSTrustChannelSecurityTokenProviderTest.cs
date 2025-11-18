@@ -38,9 +38,10 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             Microsoft.IdentityModel.Tokens.SecurityToken securityToken = new Saml2SecurityToken(new Saml2Assertion(new Saml2NameIdentifier("testuser")));
             securityTokenRequirement.Properties[SecurityTokenRequirementConstants.OnBehalfOfProperty] = securityToken;
 
-            var sut = new OioWSTrustChannelSecurityTokenProvider(securityTokenRequirement);
-            sut.CustomClientCredentials = new ClientCredentials();
-            sut.CustomClientCredentials.ClientCertificate.Certificate = Certificates.STSSignatureValidationTestCertificate;
+            var clientCredentials = new ClientCredentials();
+            clientCredentials.ClientCertificate.Certificate = Certificates.STSSignatureValidationTestCertificate;
+
+            var sut = new OioWSTrustChannelSecurityTokenProvider(securityTokenRequirement, clientCredentials);
             WsTrustRequest wsTrustRequest = new WsTrustRequest("Issue");
 
             // Act

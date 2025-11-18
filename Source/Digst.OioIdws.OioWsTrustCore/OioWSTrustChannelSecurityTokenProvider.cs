@@ -41,14 +41,10 @@ namespace Digst.OioIdws.OioWsTrustCore
 
         internal WSTrustTokenParameters WSTrustTokenParameters { get; }
 
-        /// <summary>
-        ///  The client credentials from BindingParameters passed by ChannelFactory
-        /// </summary>
-        public ClientCredentials? CustomClientCredentials { get; set; }
-
-        public OioWSTrustChannelSecurityTokenProvider(SecurityTokenRequirement tokenRequirement) : base(tokenRequirement)
+        public OioWSTrustChannelSecurityTokenProvider(SecurityTokenRequirement tokenRequirement, ClientCredentials clientCredentials) : base(tokenRequirement)
         {
             SecurityTokenRequirement = tokenRequirement ?? throw new ArgumentNullException(nameof(tokenRequirement));
+            ClientCredentials = clientCredentials ?? throw new ArgumentNullException(nameof(clientCredentials));
 
             IssuedSecurityTokenParameters issuedSecurityTokenParameters = SecurityTokenRequirement.GetProperty<IssuedSecurityTokenParameters>(SecurityTokenRequirementConstants.IssuedSecurityTokenParametersProperty);
             var wsTrustTokenParameters = issuedSecurityTokenParameters as WSTrustTokenParameters;
@@ -108,7 +104,7 @@ namespace Digst.OioIdws.OioWsTrustCore
             {
                 wstrustRequest.OnBehalfOf = new SecurityTokenElement(OnBehalfOfSecurityToken);
             }
-            else if(ProxyOnBehalfOfSecurityToken != null)
+            else if (ProxyOnBehalfOfSecurityToken != null)
             {
                 AddAdditionalXmlElement(wstrustRequest, "OnBehalfOf", ProxyOnBehalfOfSecurityToken.Certificate);
             }
@@ -137,9 +133,9 @@ namespace Digst.OioIdws.OioWsTrustCore
 
         private void BuildUseKeyElement(WsTrustRequest wstrustRequest)
         {
-            if (CustomClientCredentials != null)
+            if (ClientCredentials != null)
             {
-                AddAdditionalXmlElement(wstrustRequest, "UseKey", CustomClientCredentials.ClientCertificate.Certificate);
+                AddAdditionalXmlElement(wstrustRequest, "UseKey", ClientCredentials.ClientCertificate.Certificate);
             }
         }
 

@@ -56,7 +56,7 @@ namespace Digst.OioIdws.IntegrationTests
                 }
                 catch (AggregateException ex)
                 {
-                    StringAssert.Contains(ex.Message, "The maximum message size quota for incoming messages (128) has been exceeded. To increase the quota, use the MaxReceivedMessageSize property on the appropriate binding element.");
+                    Assert.Contains("The maximum message size quota for incoming messages (128) has been exceeded. To increase the quota, use the MaxReceivedMessageSize property on the appropriate binding element.", ex.Message);
                 }
             });
         }
@@ -169,21 +169,5 @@ namespace Digst.OioIdws.IntegrationTests
             var actualResponse = channelMethod.Invoke(_scenario).Result;
             actualResponse.Should().StartWith(expectedResponse);
         }
-        
-    private static XmlNamespaceManager CreateXmlNamespaceManager()
-    {
-        var namespaceManager = new XmlNamespaceManager(new NameTable());
-        namespaceManager.AddNamespace("a", Namespaces.WsaNamespace);
-        namespaceManager.AddNamespace("s", Namespaces.S11Namespace);
-        namespaceManager.AddNamespace("o", Namespaces.Wsse10Namespace);
-        namespaceManager.AddNamespace("vs", Namespaces.VsDebuggerNamespace);
-        namespaceManager.AddNamespace("vcf", Namespaces.WcfDiagnosticsNamespace);
-        namespaceManager.AddNamespace("wst13", Namespaces.Wst13Namespace);
-        namespaceManager.AddNamespace("wst14", Namespaces.Wst14Namespace);
-        namespaceManager.AddNamespace("u", Namespaces.WsuNamespace);
-        namespaceManager.AddNamespace("ds", Namespaces.SignatureNamespace);
-
-        return namespaceManager;
-    }
     }
 }

@@ -132,14 +132,14 @@ namespace Digst.OioIdws.IntegrationTests
                 switch (action)
                 {
                     case "NoSignature":
-                        Assert.ThrowsException<MessageSecurityException>(() => stsTokenService.GetToken());
+                        Assert.ThrowsExactly<MessageSecurityException>(() => stsTokenService.GetToken());
                         break;
 
                     case "ChangeSignature":
-                        Assert.ThrowsException<FormatException>(() => stsTokenService.GetToken());
+                        Assert.ThrowsExactly<FormatException>(() => stsTokenService.GetToken());
                         break;
                     case "ChangeMessage":
-                        Assert.ThrowsException<XmlException>(() => stsTokenService.GetToken());
+                        Assert.ThrowsExactly<XmlException>(() => stsTokenService.GetToken());
                         break;
                 }
             }, OnTamperResponse);
@@ -174,7 +174,7 @@ namespace Digst.OioIdws.IntegrationTests
 
                 this.original = original;
                 this.tampered = tampered;
-                var ex = Assert.ThrowsException<FaultException>(() => stsTokenService.GetToken());
+                var ex = Assert.ThrowsExactly<FaultException>(() => stsTokenService.GetToken());
                 Assert.AreEqual("An error occurred when verifying security for the message.", ex.Message);
             }
             finally
@@ -286,8 +286,8 @@ namespace Digst.OioIdws.IntegrationTests
 
             ProxyServerHelper.ExecuteWithBeforeResponse(() =>
             {
-                var ex = Assert.ThrowsException<FaultException>(() => stsTokenService.GetToken());
-                Assert.AreEqual("SOAP message has expired.", ex.Message);
+                var ex = Assert.ThrowsExactly<MessageSecurityException>(() => stsTokenService.GetToken());
+                Assert.Contains("SOAP message has expired.", ex.Message);
             }, OnWaitRequest);
         }
 
@@ -302,8 +302,8 @@ namespace Digst.OioIdws.IntegrationTests
 
             ProxyServerHelper.ExecuteWithBeforeResponse(() =>
             {
-                var ex = Assert.ThrowsException<MessageSecurityException>(() => stsTokenService.GetToken());
-                StringAssert.Contains("SOAP message has expired.", ex.Message);
+                var ex = Assert.ThrowsExactly<MessageSecurityException>(() => stsTokenService.GetToken());
+                Assert.Contains("SOAP message has expired.", ex.Message);
             }, OnWaitRequest);
         }
 
@@ -317,7 +317,7 @@ namespace Digst.OioIdws.IntegrationTests
                 new StsTokenService(_configuration);
 
                 // Act & Assert
-                Assert.ThrowsException<Microsoft.IdentityModel.Tokens.SecurityTokenValidationException>(() => stsTokenService.GetTokenWithProxyOnBehalfOf(new X509SecurityToken(Certificates.ExpiredCertificate)));
+                Assert.ThrowsExactly<Microsoft.IdentityModel.Tokens.SecurityTokenValidationException>(() => stsTokenService.GetTokenWithProxyOnBehalfOf(new OioWsTrustCore.X509SecurityToken(Certificates.ExpiredCertificate)));
             });
         }
     }

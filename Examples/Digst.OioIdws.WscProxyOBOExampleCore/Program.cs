@@ -3,7 +3,6 @@ using Digst.OioIdws.OioWsTrustCore;
 using Digst.OioIdws.SoapCore;
 using Digst.OioIdws.WscCore.OioWsTrust;
 using Digst.OioIdws.WscExampleCommon;
-using log4net.Config;
 using ServiceReference;
 using System;
 using System.IdentityModel.Tokens;
@@ -30,7 +29,7 @@ namespace Digst.OioIdws.WscProxyOBOExampleCore
             IHelloWorld channelWithIssuedToken;
             try
             {
-                var securityToken = (GenericXmlSecurityToken)stsTokenService.GetTokenWithProxyOnBehalfOf(new X509SecurityToken(oboCertificate));
+                var securityToken = (GenericXmlSecurityToken)stsTokenService.GetTokenWithProxyOnBehalfOf(new OioWsTrustCore.X509SecurityToken(oboCertificate));
                 Console.WriteLine("Proxy OBO token: " + securityToken.TokenXml.OuterXml);
 
                 // Set up a communications channel with the WSP based on the token
@@ -47,7 +46,7 @@ namespace Digst.OioIdws.WscProxyOBOExampleCore
             try
             {
                 // Invoke a WSP operation which requires signature but not encryption.
-                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").Result);
+                Console.WriteLine(channelWithIssuedToken.HelloSignAsync("Schultz").GetAwaiter().GetResult());
             }
             catch (Exception e)
             {
@@ -65,7 +64,7 @@ namespace Digst.OioIdws.WscProxyOBOExampleCore
             // SOAP faults are unencrypted by WSP only if special care is taken.
             try
             {
-                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").Result;
+                var error = channelWithIssuedToken.HelloSignErrorAsync("Schultz").GetAwaiter().GetResult();
                 Console.WriteLine(error);
             }
             catch (Exception e)

@@ -41,20 +41,20 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             var resultXmlString = resultXml.ToString();
 
             // wsu namespace
-            Assert.IsTrue(resultXmlString.Contains("xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\""));
+            Assert.Contains("xmlns:wsu=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\"", resultXmlString);
 
             // message id header
-            Assert.IsTrue(resultXmlString.Contains("<a:MessageID wsu:Id=\"msgid\">uuid"));
+            Assert.Contains("<a:MessageID wsu:Id=\"msgid\">uuid", resultXmlString);
 
             // to header
-            Assert.IsTrue(resultXmlString.Contains("<a:To wsu:Id=\"to\""));
+            Assert.Contains("<a:To wsu:Id=\"to\"", resultXmlString);
 
-            Assert.AreEqual(4, result.Headers.Count);
+            Assert.HasCount(4, result.Headers);
             Assert.AreEqual("Security", result.Headers[3].Name);
 
-            Assert.IsFalse(resultXmlString.Contains("<trust:Lifetime>"));
-            Assert.IsFalse(resultXmlString.Contains("<trust:Entropy>"));
-            Assert.IsTrue(resultXmlString.Contains("<trust:Issuer>"));
+            Assert.DoesNotContain("<trust:Lifetime>", resultXmlString);
+            Assert.DoesNotContain("<trust:Entropy>", resultXmlString);
+            Assert.Contains("<trust:Issuer>", resultXmlString);
         }
 
         [TestMethod]
@@ -80,7 +80,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             var sut = new OioWsTrustMessageTransformer(config);
 
             // Act
-            Assert.ThrowsException<MessageSecurityException>(() => sut.ValidateAndModifyMessageAccordingToWsTrust(reply, reply.Headers.RelatesTo), "Replay attack detected. Response of message id: uuid:febfb086-36a4-430c-888a-9dbd3ed55738");
+            Assert.ThrowsExactly<MessageSecurityException>(() => sut.ValidateAndModifyMessageAccordingToWsTrust(reply, reply.Headers.RelatesTo), "Replay attack detected. Response of message id: uuid:febfb086-36a4-430c-888a-9dbd3ed55738");
 
             // Assert
         }
@@ -105,7 +105,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
 
 
             //Assert
-            Assert.ThrowsException<MessageSecurityException>(() => sut.ValidateAndModifyMessageAccordingToWsTrust(response, new UniqueId()), "SOAP message has expired");
+            Assert.ThrowsExactly<MessageSecurityException>(() => sut.ValidateAndModifyMessageAccordingToWsTrust(response, new UniqueId()), "SOAP message has expired");
         }
 
         [TestMethod]
@@ -143,7 +143,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
 
 
             //Assert
-            Assert.ThrowsException<MessageSecurityException>(() => sut.ValidateAndModifyMessageAccordingToWsTrust(response, new UniqueId()), "SOAP signature received from STS does not validate");
+            Assert.ThrowsExactly<MessageSecurityException>(() => sut.ValidateAndModifyMessageAccordingToWsTrust(response, new UniqueId()), "SOAP signature received from STS does not validate");
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using Digst.OioIdws.Common.TestUtils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Digst.OioIdws.CommonCore.Test
 {
@@ -25,9 +23,22 @@ namespace Digst.OioIdws.CommonCore.Test
             Assert.AreEqual(cvr, sut.Cvr);
             Assert.AreSame(stsCertificate, sut.Certificate);
             Assert.IsNull(sut.OboCertificate);
+        }
 
-            // Another Act and Assertion
+        [TestMethod]
+        public void Constructor_WithOboCertificate_SetsPropertyCorrectly()
+        {
+            // Arrange
+            string stsEndpointAddress = "https://stsEndpointAddress";
+            string stsEntityIdentifier = "https://stsEntityIdentifier";
+            string cvr = "12345678";
+            X509Certificate2 stsCertificate = Certificates.StsCertificate;
+
+            // Act
+            var sut = new StsConfiguration(stsEndpointAddress, stsEntityIdentifier, cvr, stsCertificate);
             sut.OboCertificate = stsCertificate;
+
+            // Assert
             Assert.AreSame(stsCertificate, sut.OboCertificate);
         }
 
@@ -40,12 +51,12 @@ namespace Digst.OioIdws.CommonCore.Test
             string cvr = "12345678";
             X509Certificate2 stsCertificate = Certificates.StsCertificate;
 
-            // Act
             var other = new StsConfiguration(stsEndpointAddress, stsEntityIdentifier, cvr, stsCertificate)
             {
                 OboCertificate = Certificates.TestCertificate
             };
 
+            // Act
             var sut = new StsConfiguration(other);
 
             // Assert
@@ -56,23 +67,20 @@ namespace Digst.OioIdws.CommonCore.Test
             Assert.AreSame(other.OboCertificate, sut.OboCertificate);
         }
 
-        /// <summary>
-        /// Invalid input parameter cases
-        /// Test to ensure that an StsConfiguration is always in a valid state
-        /// </summary>
         [TestMethod]
-        [DataRow("", "https://stsEntityIdentifier", "12345678")]
-        [DataRow("https://stsEndpointAddress", "", "12345678")]
-        [DataRow("https://stsEndpointAddress", "https://stsEntityIdentifier", "")]
-        public void Constructor_ThrowWhenInputParameterIsEmpty(string stsEndpointAddress, string stsEntityIdentifier, string cvr)
+        [DataRow("", "https://stsEntityIdentifier", "12345678", DisplayName = "Empty endpoint address")]
+        [DataRow("https://stsEndpointAddress", "", "12345678", DisplayName = "Empty entity identifier")]
+        [DataRow("https://stsEndpointAddress", "https://stsEntityIdentifier", "", DisplayName = "Empty CVR")]
+        [DataRow(null, "https://stsEntityIdentifier", "12345678", DisplayName = "Null endpoint address")]
+        [DataRow("https://stsEndpointAddress", null, "12345678", DisplayName = "Null entity identifier")]
+        [DataRow("https://stsEndpointAddress", "https://stsEntityIdentifier", null, DisplayName = "Null CVR")]
+        public void Constructor_ThrowWhenInputParameterIsNullOrEmpty(string? stsEndpointAddress, string? stsEntityIdentifier, string? cvr)
         {
             // Arrange
             X509Certificate2 stsCertificate = Certificates.StsCertificate;
 
-            // Act
-            Assert.ThrowsException<ArgumentNullException>(() => new StsConfiguration(stsEndpointAddress, stsEntityIdentifier, cvr, stsCertificate));
-
-            // Assert
+            // Act & Assert
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsConfiguration(stsEndpointAddress!, stsEntityIdentifier!, cvr!, stsCertificate));
         }
 
         [TestMethod]
@@ -82,22 +90,16 @@ namespace Digst.OioIdws.CommonCore.Test
             string stsEndpointAddress = "https://stsEndpointAddress";
             string stsEntityIdentifier = "https://stsEntityIdentifier";
             string cvr = "12345678";
-            X509Certificate2? stsCertificate = null;
 
-            // Act
-            Assert.ThrowsException<ArgumentNullException>(() => new StsConfiguration(stsEndpointAddress, stsEntityIdentifier, cvr, stsCertificate));
-
-            // Assert
+            // Act & Assert
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsConfiguration(stsEndpointAddress, stsEntityIdentifier, cvr, null!));
         }
 
         [TestMethod]
         public void Constructor_CopyConstructor_ThrowsWhenOtherIsNull()
         {
-            // Arrange
-            StsConfiguration? other = null;
-
             // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new StsConfiguration(other));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsConfiguration(null!));
         }
     }
 }

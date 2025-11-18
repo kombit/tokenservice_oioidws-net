@@ -30,7 +30,8 @@ They are also located in the "Misc\Specifications" folder. It is the copies on S
 
 Requirements:
 
-- .Net 6.0 or newer.
+- .Net 10.0 or newer.
+- For the minimum Visual Studio version, refer to the [version requirements](https://learn.microsoft.com/en-us/dotnet/core/compatibility/sdk/10.0/version-requirements) document for more details.
 - Transport Layer Security (TLS):
   - The "OIO IDWS SOAP 1.1" specification states that in order to maintain "Message Confidentiality", "a secure transport protocol with strong encryption such as 'TLS 1.2' MUST be used.".
   - As '.NET' doesn't have support to enforce this setting for 'WCF Services', this must be done on an 'Operating System' level by using a tool like IIS Crypto (https://www.nartac.com/Products/IISCrypto) (freeware) where a template, for example, 'PCI 3.1', can be chosen and afterward by unmarking all protocols, except 'TLS 1.2', will ensure to enforce this requirement.
@@ -38,7 +39,7 @@ Requirements:
 
 ## How to use
 
-Download `Digst.OioIdws.WscCore` package through NuGet. Open the configuration file and fill out all {REQUIRED} attributes. Also, fill out all {OPTIONAL} attributes or remove these if not needed. See configuration file Digst.OioIdws.WscCore.OioWsTrust.OioIdwsWcfConfigurationSection for details about each configuration element.
+Add reference to the `KDM.Digst.OioIdws.WscCore` package through NuGet. Follow examples such as Digst.OioIdws.WscExampleCoreNuget or Digst.OioIdws.WscExampleCoreWithCode as described in [README](../../README.md) to get started. See configuration file Digst.OioIdws.WscCore.OioWsTrust.OioIdwsWcfConfigurationSection for details about each configuration element.
 
 The component has two implementations of the interface Digst.OioIdws.OioWsTrustCore.IStsTokenService which can be initialized programmatically:
 

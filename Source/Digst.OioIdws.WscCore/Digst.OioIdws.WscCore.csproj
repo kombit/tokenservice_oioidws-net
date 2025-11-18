@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Description>Kombit.OioIdws.WscCore is a .Net Core based reference implementation of the OIOIDWS 1.1 profile. The Toolkit can be used by clients (e.g. service providers) to act as a Web Service Consumer (WSC).</Description>
     <PackageProjectUrl>https://kombit.dk/</PackageProjectUrl>
     <Authors>KOMBIT</Authors>
@@ -14,15 +14,15 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <Nullable>enable</Nullable>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>13.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
-    <PackageReference Include="System.Runtime.Caching" Version="7.0.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="6.29.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+	<PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.0" />
+	<PackageReference Include="System.Runtime.Caching" Version="10.0.0" />
+	<PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="8.14.0" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0" />
   </ItemGroup>
 
   <PropertyGroup>

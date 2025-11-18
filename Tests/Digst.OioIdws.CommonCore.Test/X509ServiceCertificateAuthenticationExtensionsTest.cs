@@ -37,21 +37,21 @@ namespace Digst.OioIdws.CommonCore.Test
         public void DeepClone_Should_Throw_ArgumentNullException_If_Source_Is_Null()
         {
             // Arrange
-            X509ServiceCertificateAuthentication source = null;
+            X509ServiceCertificateAuthentication source = null!;    // force null value but avoid compiler warning for testing purposes
 
             // Act + Assert
-            Assert.ThrowsException<ArgumentNullException>(() => source.DeepClone());
+            Assert.ThrowsExactly<ArgumentNullException>(() => source.DeepClone());
         }
 
         [TestMethod]
         public void CopyFrom_NullDestination_ThrowsArgumentNullException()
         {
             // Arrange
-            X509ServiceCertificateAuthentication destination = null;
+            X509ServiceCertificateAuthentication destination = null!;    // force null value but avoid compiler warning for testing purposes
             X509ServiceCertificateAuthentication source = new X509ServiceCertificateAuthentication();
 
             // Act and Assert
-            Assert.ThrowsException<ArgumentNullException>(() => destination.CopyFrom(source));
+            Assert.ThrowsExactly<ArgumentNullException>(() => destination.CopyFrom(source));
         }
 
         [TestMethod]
@@ -59,10 +59,10 @@ namespace Digst.OioIdws.CommonCore.Test
         {
             // Arrange
             X509ServiceCertificateAuthentication destination = new X509ServiceCertificateAuthentication();
-            X509ServiceCertificateAuthentication source = null;
+            X509ServiceCertificateAuthentication source = null!;    // force null value but avoid compiler warning for testing purposes
 
             // Act and Assert
-            Assert.ThrowsException<ArgumentNullException>(() => destination.CopyFrom(source));
+            Assert.ThrowsExactly<ArgumentNullException>(() => destination.CopyFrom(source));
         }
 
         [TestMethod]
@@ -94,11 +94,11 @@ namespace Digst.OioIdws.CommonCore.Test
         public void Validate_NullSource_ThrowsArgumentNullException()
         {
             // Arrange
-            X509ServiceCertificateAuthentication source = null;
-            X509Certificate2 certificate = new X509Certificate2();
+            X509ServiceCertificateAuthentication source = null!;    // force null value but avoid compiler warning for testing purposes
+            X509Certificate2 certificate = Certificates.StsCertificate;
 
             // Act + Assert
-            Assert.ThrowsException<ArgumentNullException>(() => source.Validate(certificate));
+            Assert.ThrowsExactly<ArgumentNullException>(() => source.Validate(certificate));
         }
 
         [TestMethod]
@@ -106,10 +106,10 @@ namespace Digst.OioIdws.CommonCore.Test
         {
             // Arrange
             X509ServiceCertificateAuthentication source = new X509ServiceCertificateAuthentication();
-            X509Certificate2 certificate = null;
+            X509Certificate2 certificate = null!;    // force null value but avoid compiler warning for testing purposes
 
             // Act + Assert
-            Assert.ThrowsException<ArgumentNullException>(() => source.Validate(certificate));
+            Assert.ThrowsExactly<ArgumentNullException>(() => source.Validate(certificate));
         }
 
         [TestMethod]
@@ -187,7 +187,7 @@ namespace Digst.OioIdws.CommonCore.Test
             };
 
             // Act + Assert
-            Assert.ThrowsException<InvalidOperationException>(() => source.GetCertificateValidator());
+            Assert.ThrowsExactly<InvalidOperationException>(() => source.GetCertificateValidator());
         }
 
         [TestMethod]

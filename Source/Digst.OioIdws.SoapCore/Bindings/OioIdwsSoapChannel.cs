@@ -77,7 +77,7 @@ namespace Digst.OioIdws.SoapCore.Bindings
             Message originalResponse = _innerChannel.EndRequest(result);
 
             // manually validate signature and other constraints because .NET Core does not have support for Asymmetric and message security
-            UniqueId originalMessageId = (UniqueId)result.AsyncState;
+            UniqueId originalMessageId = (UniqueId)result.AsyncState!;  // AsyncState is passed from BeginRequest, which must be not null
             originalResponse = Validate(originalResponse, originalMessageId);
 
             // after verifying that the response's security header is correct, modify the message

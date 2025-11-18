@@ -2,6 +2,7 @@
 using Digst.OioIdws.OioWsTrustCore;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
+using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -36,7 +37,15 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             // Assert
 
             Assert.IsInstanceOfType(tokenProvider, typeof(OioWSTrustChannelSecurityTokenProvider));
-            Assert.AreEqual(clientCredentials, ((OioWSTrustChannelSecurityTokenProvider)tokenProvider).CustomClientCredentials);
+
+            var provider = (OioWSTrustChannelSecurityTokenProvider)tokenProvider;
+#pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
+            var bindingAttr = BindingFlags.NonPublic | BindingFlags.Instance;
+#pragma warning restore S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
+            var propertyInfo = provider.GetType().GetProperty("ClientCredentials", bindingAttr);
+            var setClientCredentials = propertyInfo!.GetValue(provider);
+
+            Assert.AreSame(clientCredentials, setClientCredentials);
         }
     }
 }

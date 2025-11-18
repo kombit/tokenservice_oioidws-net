@@ -38,7 +38,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
             StsTokenServiceConfiguration? tokenServiceConfiguration = null;
 
             // Act
-            Assert.ThrowsException<ArgumentNullException>(() => new StsTokenServiceCache(tokenServiceConfiguration!));  // force null
+            Assert.ThrowsExactly<ArgumentNullException>(() => new StsTokenServiceCache(tokenServiceConfiguration!));  // force null
 
             // Assert
         }
@@ -58,7 +58,7 @@ namespace Digst.OioIdws.OioWsTrustCore.Test
 
             // Assert
             // Non-existing cache item will cause a request to STS "https://testendpoint.com", as a result, a EndpointNotFoundException will be thrown.
-            Assert.ThrowsException<EndpointNotFoundException>(() => service.GetToken());
+            Assert.ThrowsExactly<EndpointNotFoundException>(() => service.GetToken());
         }
     }
 }

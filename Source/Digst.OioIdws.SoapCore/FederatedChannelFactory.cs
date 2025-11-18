@@ -16,15 +16,7 @@ namespace Digst.OioIdws.SoapCore
         {
         }
 
-        public FederatedChannelFactory(string endpointConfigurationName) : base(endpointConfigurationName)
-        {
-        }
-
         public FederatedChannelFactory(Binding binding, EndpointAddress remoteAddress) : base(binding, remoteAddress)
-        {
-        }
-
-        public FederatedChannelFactory(string endpointConfigurationName, EndpointAddress remoteAddress) : base(endpointConfigurationName, remoteAddress)
         {
         }
 
@@ -32,13 +24,17 @@ namespace Digst.OioIdws.SoapCore
         {
         }
 
-        protected override void ApplyConfiguration(string configurationName)
+        protected override ServiceEndpoint CreateDescription()
         {
-            if (Endpoint.EndpointBehaviors.Count == 0)
+            ServiceEndpoint endpoint = base.CreateDescription();
+
+            if (endpoint.EndpointBehaviors.Count == 0)
             {
-                Endpoint.EndpointBehaviors.Add(new FederatedChannelClientCredentials());
+                endpoint.EndpointBehaviors.Add(new FederatedChannelClientCredentials());
             }
-            Endpoint.EndpointBehaviors.Add(new SoapClientBehavior());
+            endpoint.EndpointBehaviors.Add(new SoapClientBehavior());
+
+            return endpoint;
         }
     }
 
