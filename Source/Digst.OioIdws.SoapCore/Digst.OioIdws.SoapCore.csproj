@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -20,10 +20,10 @@
 	</PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0-rc.2.25502.107" />
-	<PackageReference Include="System.ServiceModel.Primitives" Version="8.1.2" />
+	<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0" />
+	<PackageReference Include="System.ServiceModel.Primitives" Version="10.0.652802" />
 	<PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="8.14.0" />
-	<PackageReference Include="System.ServiceModel.Federation" Version="8.1.2" />
+	<PackageReference Include="System.ServiceModel.Federation" Version="10.0.652802" />
 	<PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
 	<PackageReference Include="System.Private.ServiceModel" Version="4.10.3" />
     <ProjectReference Include="..\Digst.OioIdws.CommonCore\Digst.OioIdws.CommonCore.csproj" />

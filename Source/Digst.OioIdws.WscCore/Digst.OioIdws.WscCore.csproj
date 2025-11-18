@@ -18,11 +18,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.0-rc.2.25502.107" />
-	<PackageReference Include="System.Runtime.Caching" Version="10.0.0-rc.2.25502.107" />
+	<PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.0" />
+	<PackageReference Include="System.Runtime.Caching" Version="10.0.0" />
 	<PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="8.14.0" />
-	<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0-rc.2.25502.107" />
-	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0-rc.2.25502.107" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.0" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.0" />
   </ItemGroup>
 
   <PropertyGroup>
